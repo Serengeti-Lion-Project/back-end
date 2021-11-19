@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
-@Document(collection="testpersonalmeet")
+@Document(collection="personalmeet")
 @Data
 public class TestMeetPersonal {
 

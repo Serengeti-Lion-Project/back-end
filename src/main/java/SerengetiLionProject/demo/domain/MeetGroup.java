@@ -11,7 +11,7 @@ import javax.persistence.Id;
 
 @Getter
 @Setter
-@Document(collection="testmeetgroup")
+@Document(collection="meetgroup")
 @Data
 public class MeetGroup {
         @Transient
