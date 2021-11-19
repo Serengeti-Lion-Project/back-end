@@ -4,7 +4,6 @@ import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.domain.TestMeetPersonal;
 import SerengetiLionProject.demo.dto.MeetOnceGroupForm;
 import SerengetiLionProject.demo.dto.MeetOnceUserForm;
-import SerengetiLionProject.demo.repository.MeetPersonalRepository;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,6 @@ public class MeetOnceController {
      */
     @PostMapping(value="/once/new/create")
     public String createOnceUser(MeetOnceUserForm meetOnceUserForm, Model model){
-
         //form에 hidden input으로 값 넣어둠 -> url_id랑 title 얻어오기
         String url_id=meetOnceUserForm.getUrl_id();
         String title=meetOnceUserForm.getTitle();
