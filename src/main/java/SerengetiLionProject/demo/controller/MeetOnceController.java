@@ -73,13 +73,22 @@ public class MeetOnceController {
      * form에 이름, 방 비밀번호, 개인비밀번호 입력하면 여기로 옴
      * 왜 value가 "/meetonce/new/create" 인가요? -> ,, form에서 action으로 변수값을 넣어주는게 인터넷에서 알려주는대로 해도 안돼서,,, 그냥 여기서 redirect하기로 했어요
      */
-    @PostMapping(value="/once/new/create")
+    @PostMapping(value="/once/new/createUser")
     public String createOnceUser(MeetOnceUserForm meetOnceUserForm, Model model){
         //form에 hidden input으로 값 넣어둠 -> url_id랑 title 얻어오기
         String url_id=meetOnceUserForm.getUrl_id();
         String title=meetOnceUserForm.getTitle();
 
         //url+title로 방 비밀번호 검증작업 필요!
+        MeetGroup group=meetGroupService.findOne(Long.parseLong(url_id));
+        if(group!=null){
+            String page_pw=group.getPage_pw();
+            if(!meetOnceUserForm.getPage_pw().equals(page_pw)){
+                return "redirect:/once/"+title+"/"+url_id;
+            }
+        }else{
+            return "redirect:/once";
+        }
 
         MeetPersonal person=new MeetPersonal(Long.parseLong(url_id),title,meetOnceUserForm.getName(),meetOnceUserForm.getUpw());
         String val=personalService.saveNewUser(person); //여기서 중복유저 확인, 신규유저 확인합니다.

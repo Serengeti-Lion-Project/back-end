@@ -25,6 +25,7 @@ public class MeetGroup {
         private Integer start_time;  // time 타입 스트링 괜찮은지 확인해야함
         private Integer end_time;
         private String page_pw;
+        private Long team_id;
 
         @Builder
         public MeetGroup(String title, String start_date, String end_date, Integer start_time, Integer end_time, String page_pw) {
@@ -33,6 +34,7 @@ public class MeetGroup {
                 this.end_date=end_date;
                 this.start_time=start_time;
                 this.end_date=end_date;
+                this.end_time=end_time;
                 this.page_pw=page_pw;
         }
 }

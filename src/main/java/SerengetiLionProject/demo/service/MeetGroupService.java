@@ -26,7 +26,7 @@ public class MeetGroupService {
     public List<MeetGroup> findAll(){
         return groupRepository.findAll(); //일회성 만드는 페이지에서 저장한 모든 내용들 보여줌.
     }
-    public Optional<MeetGroup> findOne(Long url_id){
+    public MeetGroup findOne(Long url_id){
         return groupRepository.findByUrl_id(url_id);
     }
 }

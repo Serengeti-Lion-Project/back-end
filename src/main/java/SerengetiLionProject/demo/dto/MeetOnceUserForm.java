@@ -10,4 +10,5 @@ public class MeetOnceUserForm {
     private String title;
     private String name;
     private String upw;
+    private String page_pw;
 }
