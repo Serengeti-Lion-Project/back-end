@@ -22,24 +22,19 @@ public class User {
 
     @Id
     private Long _id; // auto increment 적용
+    private String team_id; // , 기준으로 자르게 string으로 넣을게요. (기본값은 "")
     private String name;
     private String email;
     private String nickname;
     private Role role;
 
-//teamid: sessionuser에 저장해야 될 것 같아서 넣어놨는데 일단 외부테이블에서 어떻게 가져오는지 모르겠어서 주석처리 해둘게용
-    //    @Column
-    //    private Long team_id;
-
-    //    @Column(nullable=false)
-
-
     @Builder
-    public User(String name, String email, String nickname, Role role) {
+    public User(String name, String email, String nickname, Role role, String team_id) {
         this.name = name;
         this.email = email;
         this.nickname = nickname;
         this.role = role;
+        this.team_id=team_id;
     }
     public User update(String name) {
         this.name = name;

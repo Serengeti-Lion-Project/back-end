@@ -1,12 +1,17 @@
 package SerengetiLionProject.demo.controller;
 
 import SerengetiLionProject.demo.domain.MeetGroup;
-import SerengetiLionProject.demo.domain.TestMeetPersonal;
+import SerengetiLionProject.demo.domain.MeetPersonal;
+import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.dto.MeetOnceGroupForm;
 import SerengetiLionProject.demo.dto.MeetOnceUserForm;
+import SerengetiLionProject.demo.dto.SessionUser;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MeetOnceController {
@@ -25,7 +31,6 @@ public class MeetOnceController {
         this.meetGroupService = onceMemberService;
         this.personalService=personalService;
     }
-
 
     @GetMapping("/")
     public String firstPage(){
@@ -73,11 +78,10 @@ public class MeetOnceController {
         //form에 hidden input으로 값 넣어둠 -> url_id랑 title 얻어오기
         String url_id=meetOnceUserForm.getUrl_id();
         String title=meetOnceUserForm.getTitle();
-        System.out.println("From Postmapping: url_id: "+url_id+"   title: "+title);
 
         //url+title로 방 비밀번호 검증작업 필요!
 
-        TestMeetPersonal person=new TestMeetPersonal(Long.parseLong(url_id),title,meetOnceUserForm.getName(),meetOnceUserForm.getUpw());
+        MeetPersonal person=new MeetPersonal(Long.parseLong(url_id),title,meetOnceUserForm.getName(),meetOnceUserForm.getUpw());
         String val=personalService.saveNewUser(person); //여기서 중복유저 확인, 신규유저 확인합니다.
         if(val.equals("userCheckSuccess")||val.equals(person.getName())){
             model.addAttribute("resultText",val);
@@ -93,6 +97,6 @@ public class MeetOnceController {
      */
     @GetMapping(value="/once/{title}/{urlid}/enter")
     public String enterMeetOnce(Model model, @PathVariable("title") String title, @PathVariable("urlid") String urlid){
-        return "thymeleaf/meet";
+        return "thymeleaf/meetAfterEnter";
     }
 }

@@ -1,0 +1,40 @@
+body {
+    margin-left:10%;
+    margin-right:10%;
+}
+.inner {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menuBox {
+    text-align: center;
+    margin-top:100px;
+}
+
+.buttonBox {
+    width:300px;
+    height:300px;
+    border:solid;
+    border-radius: 60px;
+    border-color:#c4c4c4;
+    border-width:1px;
+    text-align: center;
+    line-height:300px;
+    margin:20px;
+}
+
+.oneTimeButton {
+    height: 250px;
+    width:200px;
+    vertical-align: middle;
+    margin-bottom: 30px;
+}
+
+.twoTimeButton {
+    height:200px;
+    width:200px;
+    vertical-align: middle;
+}

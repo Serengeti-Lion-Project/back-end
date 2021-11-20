@@ -1,4 +1,4 @@
-package SerengetiLionProject.demo.sominTest;
+package SerengetiLionProject.config;
 
 import SerengetiLionProject.demo.repository.MeetGroupRepository;
 import SerengetiLionProject.demo.repository.MeetPersonalRepository;

@@ -1,6 +1,6 @@
 package SerengetiLionProject.demo.service;
 
-import SerengetiLionProject.demo.domain.TestMeetPersonal;
+import SerengetiLionProject.demo.domain.MeetPersonal;
 import SerengetiLionProject.demo.repository.MeetPersonalRepository;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ public class TestMeetPersonalService {
     }
 
 
-    public String saveNewUser(TestMeetPersonal person) {
+    public String saveNewUser(MeetPersonal person) {
         String existStatus = validateDuplicateMember(person); //중복 회원 검증
         if (existStatus.equals("notexist")) {
             personalRepository.save(person);
@@ -31,12 +31,12 @@ public class TestMeetPersonalService {
 
     }
 
-    private String validateDuplicateMember(TestMeetPersonal person) {
-        TestMeetPersonal getUser = personalRepository.findOneByNameandUrl(person.getName(), person.getUrl_id(), person.getTitle());
+    private String validateDuplicateMember(MeetPersonal person) {
+        MeetPersonal getUser = personalRepository.findOneByNameandUrl(person.getName(), person.getUrl_id(), person.getTitle());
         if (getUser == null) {
             return "notexist";
         }
-        TestMeetPersonal getUserPwd = personalRepository.checkPwd(person.getUpw(), person.getName(), person.getUrl_id(), person.getTitle());
+        MeetPersonal getUserPwd = personalRepository.checkPwd(person.getUpw(), person.getName(), person.getUrl_id(), person.getTitle());
         if (getUserPwd == null) {
             return "wrongpwd";
         } else {
@@ -48,7 +48,7 @@ public class TestMeetPersonalService {
      * 현재 url, title에 대한 전체 회원 조회
      */
 
-    public List<TestMeetPersonal> findAll(Long url_id, String title) {
+    public List<MeetPersonal> findAll(Long url_id, String title) {
         return personalRepository.findAllByUrlandTitle(url_id,title);
     }
 }

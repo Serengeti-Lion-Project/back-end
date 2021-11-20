@@ -84,14 +84,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             return user;
         }
 
-        // DB에 존재하지 않는 유저라면 user 객체 생성
-        User user = new User(attributes.getName(),attributes.getEmail(),"", Role.USER);
+        // DB에 존재하지 않는 유저라면 user 객체 생성, 처음 생성시에는 ""으로 team_id가 설정! (어떤 팀도 없는 상태)
+        User user = new User(attributes.getName(),attributes.getEmail(),"", Role.USER,"");
         /**
          * 디폴트 Role: USER / 팀장일 경우 체크 -> Role.LEAD 로 지정 (LEADER의미)
          */
-//        User user=attributes.toEntity();
-//        user.setNickname("");
-        //user.set_id(sequenceGeneratorService.generateSequence(User.SEQUENCE_NAME)); // auto increment
         mongoTemplate.insert(user);
         return user;
     }
