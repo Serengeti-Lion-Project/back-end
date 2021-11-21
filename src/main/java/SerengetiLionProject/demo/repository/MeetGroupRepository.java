@@ -10,5 +10,4 @@ public interface MeetGroupRepository {
     MeetGroup findByUrl_id(Long url_id); // domain.OnceMember 에서 url_id 로 해당하는 객체 찾음
     MeetGroup findByTitle(String title); // title 로 객체 찾음
     List<MeetGroup> findAll();                     // 지금까지 저장된 모든 것들 리스트로 반환
-
 }

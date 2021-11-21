@@ -17,7 +17,7 @@ public class MeetGroupService {
         this.groupRepository = groupRepository;
     }
 
-    //일회성 만드는 페이지에 내용들을 다 저장함.
+    //일회성 만드는 페이지에서 폼으로 들어온 내용들을 다 저장함.
     public Long SaveGroup(MeetGroup onceMember){
         groupRepository.save(onceMember);
         return onceMember.getUrl_id();

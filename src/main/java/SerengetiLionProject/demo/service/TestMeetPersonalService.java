@@ -12,7 +12,7 @@ public class TestMeetPersonalService {
 
     private final MeetPersonalRepository personalRepository;
 
-    //TestMeetPersonalService : SpringCOnfig에서 등록록
+    //TestMeetPersonalService : SpringCOnfig에서 등록록록록록
    public TestMeetPersonalService(MeetPersonalRepository personalRepository) {
         this.personalRepository = personalRepository;
     }

@@ -22,6 +22,7 @@
         </div>
         <input type="hidden" id="url_id" name="url_id" value="${urlid}">
         <input type="hidden" id="title" name="title" value="${title}">
+<!-- model에서 보낸 title, urlid 출력-->
         <button type="submit">등록</button>
     </form>
 </div> <!-- /container -->
