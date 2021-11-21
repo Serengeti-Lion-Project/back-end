@@ -1,9 +1,7 @@
-package SerengetiLionProject.config;
+package SerengetiLionProject.demo;
 
-import SerengetiLionProject.demo.repository.MeetGroupRepository;
-import SerengetiLionProject.demo.repository.MeetPersonalRepository;
-import SerengetiLionProject.demo.repository.TestMeetGroupRepository;
-import SerengetiLionProject.demo.repository.TestMeetPersonalRepository;
+import SerengetiLionProject.demo.repository.*;
+import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.context.annotation.Bean;
@@ -30,5 +28,15 @@ public class SpringConfig {
     @Bean
     public MeetGroupRepository groupRepository(){
         return new TestMeetGroupRepository();
+    }
+
+    @Bean
+    public FinalScheduleService finalScheduleService(){
+        return new FinalScheduleService(finalScheduleRepository());
+    }
+
+    @Bean
+    public FinalScheduleRepository finalScheduleRepository(){
+        return new TestFinalScheduleRepository();
     }
 }

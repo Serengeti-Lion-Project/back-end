@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MeetOnceGroupForm {
+public class MeetOnceNewGroupForm {
     private String title;
     private String start_date;
     private String end_date;

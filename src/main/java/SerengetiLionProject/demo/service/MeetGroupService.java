@@ -18,7 +18,7 @@ public class MeetGroupService {
     }
 
     //일회성 만드는 페이지에 내용들을 다 저장함.
-    public Long onceSaveGroup(MeetGroup onceMember){
+    public Long SaveGroup(MeetGroup onceMember){
         groupRepository.save(onceMember);
         return onceMember.getUrl_id();
     }

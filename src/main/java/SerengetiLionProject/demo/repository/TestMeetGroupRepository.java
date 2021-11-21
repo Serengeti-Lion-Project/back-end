@@ -14,10 +14,10 @@ public class TestMeetGroupRepository implements MeetGroupRepository{
     private MongoTemplate mongoTemplate;
 
     @Override
-    public MeetGroup save(MeetGroup onceMember) {
+    public MeetGroup save(MeetGroup meetGroup) {
 //        onceMember.setUrl_id(++sequence);               // store에 넣기 전에 url_id를 세팅해줌(자동 증가)
-        mongoTemplate.insert(onceMember);
-        return onceMember;
+        mongoTemplate.insert(meetGroup);
+        return meetGroup;
     }
 
     @Override

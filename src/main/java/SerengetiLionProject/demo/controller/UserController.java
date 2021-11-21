@@ -1,8 +1,6 @@
 package SerengetiLionProject.demo.controller;
 
-import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.domain.User;
-import SerengetiLionProject.demo.dto.MeetOnceGroupForm;
 import SerengetiLionProject.demo.dto.SessionUser;
 import SerengetiLionProject.demo.dto.UserNickNameForm;
 import org.springframework.beans.factory.annotation.Autowired;

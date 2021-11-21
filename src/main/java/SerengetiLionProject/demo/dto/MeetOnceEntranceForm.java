@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MeetOnceUserForm {
+public class MeetOnceEntranceForm {
     private String url_id;
     private String title;
     private String name;
