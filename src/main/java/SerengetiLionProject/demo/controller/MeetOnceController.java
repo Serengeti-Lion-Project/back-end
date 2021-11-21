@@ -45,6 +45,9 @@ public class MeetOnceController {
     public String create(MeetOnceNewGroupForm form) {
         //Long url_id, String title, String start_date, String end_date, Integer start_time, Integer end_time, String page_pw
         System.out.println("meet group post mapping: title:" + form.getTitle());
+        System.out.println("form.getStart_date() = " + form.getStart_date());
+        System.out.println("form.getStart_date() = " + form.getEnd_date());
+
         MeetGroup meetGroup = new MeetGroup(form.getTitle(), form.getStart_date().toString(), form.getEnd_date().toString(), form.getStart_time(), form.getEnd_time(), form.getPage_pw());
         Long get_url = meetGroupService.SaveGroup(meetGroup); // meet 만들고 리턴받은 url_id 값 저장
         Long url_id = get_url;
