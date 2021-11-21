@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2/**", "/h2-console/**","/once/**").permitAll()
+                .antMatchers("/", "/css/**", "/img/**", "/js/**", "/h2/**", "/h2-console/**","/once/**").permitAll()
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()   //여기서부터는 전부 인증된(=로그인된) 사용자만 접근 가능
                 .and()
