@@ -5,8 +5,8 @@
 
     <form action="/once/new/createUser" method="post">
     <div class="form-group">
-                <label for="page_pw">방 비밀번호</label>
-                <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">
+        <label for="page_pw">방 비밀번호</label>
+        <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">
             </div>
         <div class="form-group">
             <label for="name">이름</label>

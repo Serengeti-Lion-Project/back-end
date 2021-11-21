@@ -36,100 +36,65 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script>
-  $( function() {
-    var dateFormat = "mm/dd/yy",
-      from = $( "#from" )
-        .datepicker({
-          defaultDate: "+1w",
-          changeMonth: true,
-          numberOfMonths: 3
-        })
-        .on( "change", function() {
-          to.datepicker( "option", "minDate", getDate( this ) );
-        }),
-      to = $( "#to" ).datepicker({
-        defaultDate: "+1w",
-        changeMonth: true,
-        numberOfMonths: 3
-      })
-      .on( "change", function() {
-        from.datepicker( "option", "maxDate", getDate( this ) );
-      });
+      $( function() {
+        var dateFormat = "mm/dd/yy",
+          from = $( "#from" )
+            .datepicker({
+              defaultDate: "+1w",
+              changeMonth: true,
+              numberOfMonths: 3
+            })
+            .on( "change", function() {
+              to.datepicker( "option", "minDate", getDate( this ) );
+            }),
+          to = $( "#to" ).datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            numberOfMonths: 3
+          })
+          .on( "change", function() {
+            from.datepicker( "option", "maxDate", getDate( this ) );
+          });
 
-    function getDate( element ) {
-      var date;
-      try {
-        date = $.datepicker.parseDate( dateFormat, element.value );
-      } catch( error ) {
-        date = null;
-      }
-      var ddd;
-      ddd=date.getFullYear().toString();
-      ddd+="/";
-      ddd+=date.getMonth().toString();
-      ddd+="/";
-      ddd+=date.getDate().toString();
-      return date;
-    }
-  } );
-  </script>
+        function getDate( element ) {
+          var date;
+          try {
+            date = $.datepicker.parseDate( dateFormat, element.value );
+          } catch( error ) {
+            date = null;
+          }
+          var ddd;
+          ddd+=date.getDate().toString();
+          ddd+="-";
+          ddd+=date.getMonth().toString();
+          ddd+="-";
+          ddd=date.getFullYear().toString();
 
+          return date;
+        }
+      } );
+    </script>
 </head>
 <body>
-<form>
+<form action="/once" method="post">
     <div class="inner">
         <div class="logoBox">
             <img src="img/logoImage.png" class="logoImage" >
             <p style="font-size: 40px;">우리 대체 언제 만나 ?</p>
         </div>
         <form>
-            <input type="text" id="title" placeholder="지금 제목을 입력하세요!">
+            <input type="text" id="title" name="title" placeholder="지금 제목을 입력하세요!">
             <div class="mainContent">
                 <div class="leftBox">
                     <div class="dateBox">
-
-                        <script>
-                       /* var today=new Date();
-                        var dates=new Array(35);
-                        var plus=0;
-                        var startDay=today.getDay();
-                        for(var i=startDay;i<35;i++) {
-                            var TODAY=new Date();
-                            var temp=new Date(TODAY.setDate(TODAY.getDate()+plus));
-                            plus++;
-                            dates[i]=temp.getDate();
-                        }
-                        for(var j=0;j<35;j++) {
-                            if(dates[j]!=undefined) {
-                                document.write(dates[j]+" ");
-                            }
-                            if(j%7==6) {
-                                document.write("<br>");
-                            }
-                        }
-                        for(var i=0;i<5;i++) {
-                            dates[i]=new Array(7);
-                            for(var j=0;j<7;j++) {
-
-                            }
-                        }
-                        for(var i=0;i<5;i++) {
-                            for(var j=0;j<7;j++) {
-
-                            }
-                        }
-
-                        var future=new Date(today.setDate(today.getDate()+33));*/
-                    </script>
                         <div class="dateFromBox">
                             <label for="from">From</label>
-                            <input type="text" id="from" name="from"><br>
+                            <input type="text" id="from" name="start_date"><br>
                         </div>
                         <div class="dateToBox">
                             <label for="to">To</label>
-                            <input type="text" id="to" name="to">
+                            <input type="text" id="to" name="end_date">
                         </div>
-
                     </div>
                     <p style="margin-top:30px">만날 날짜를 선택하세요</p>
                 </div>
@@ -138,7 +103,7 @@
                 <div class="rightBox">
                     <div class="startTime">
                         <img src="img/timeIcon.png" class="selectIcon">
-                        <select id="startTimeSelect" onChange="this.form.submit();">
+                        <select id="startTimeSelect" name="start_time">
                             <option value="0" selected>12:00 AM</option>
                             <option value="1">1:00 AM</option>
                             <option value="2">2:00 AM</option>
@@ -168,7 +133,7 @@
                     </div>
                     <div class="endTime">
                         <img src="img/timeIcon.png" class="selectIcon">
-                        <select id="endTimeSelect" onChange="this.form.submit();">
+                        <select id="endTimeSelect" name="end_time">
 
                             <option value="1" selected>1:00 AM</option>
                             <option value="2">2:00 AM</option>
@@ -195,11 +160,13 @@
                             <option value="23">11:00 PM</option>
                             <option value="24">12:00 AM</option>
                         </select>
+
+
                         <p>시까지</p>
                     </div>
                     <div class="passwordBox">
                         <img src="img/passwordIcon.png" class="selectIcon">
-                        <input type="password" id="pw" placeholder="패스워드 입력">
+                        <input type="password" id="pw" name="page_pw" placeholder="패스워드 입력">
                     </div>
 
                     <div class="makeButton">
@@ -208,8 +175,6 @@
                 </div>
             </div>
         </form>
-    </div>
-    </div>
     </div>
 </form>
 </body>
