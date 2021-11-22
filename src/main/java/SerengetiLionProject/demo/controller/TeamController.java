@@ -2,11 +2,12 @@ package SerengetiLionProject.demo.controller;
 
 import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.MeetGroup;
+import SerengetiLionProject.demo.domain.Team;
+import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.dto.MeetTeamFinalDateForm;
 import SerengetiLionProject.demo.dto.MeetTeamNewGroupForm;
-import SerengetiLionProject.demo.service.FinalScheduleService;
-import SerengetiLionProject.demo.service.MeetGroupService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
+import SerengetiLionProject.demo.dto.TeamMakingForm;
+import SerengetiLionProject.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +21,38 @@ public class TeamController {
     private MeetGroupService meetGroupService;
     private TestMeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
+    private TeamService teamService;
+    private UserService userService;
 
     @Autowired
-    public TeamController(MeetGroupService onceMemberService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService) {
-        this.meetGroupService = onceMemberService;
-        this.personalService=personalService;
-        this.finalScheduleService=finalScheduleService;
+    public TeamController(MeetGroupService meetGroupService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService, TeamService teamService, UserService userService) {
+        this.meetGroupService = meetGroupService;
+        this.personalService = personalService;
+        this.finalScheduleService = finalScheduleService;
+        this.teamService = teamService;
+        this.userService = userService;
     }
 
+    @PostMapping("/fixed/makeTeam")
+    public String teamMake(TeamMakingForm teamMakingForm){
+        String team_name = teamMakingForm.getTeam_name(); // 팀명
+        String invited_members = teamMakingForm.getInvited_members(); // 초대한 팀원
+        String[] emails = invited_members.split(",");
+        Team team = new Team(team_name); // 팀 객체 생성
+        Team team_temp = teamService.saveTeam(team);
+        Long team_id = team_temp.get_id(); // 팀 id 가져오기
+        String teamId = team_id.toString();
+        for(int i=0;i<emails.length;i++){ // 초대할 팀원 한명씩 이미 존재하는 유저인지 확인
+            User user = userService.findByEmail(emails[i]);
+            if(user==null){ // 해당 이메일을 갖는 유저가 존재하지 않는다면
+                return ""; // front에게 메세지 보내야 함 ******************
+            }
+            else{ // 유저가 존재하면 teamId에 추가해준다. ******************
+                userService.saveTeamId(user.getTeam_id(), user.getEmail(), team_id);
+            }
+        }
+        return "/fixed/"+teamId; //    <input type="hidden" id="team_id" name="team_id" value="${team_id}">
+    }
 
     //현재 팀 (team_id가 할당되어있다 가정 -> '새로운 meet 만들기' 누르면 여기로 넘어옴
     @GetMapping(value="/fixed/{teamid}")

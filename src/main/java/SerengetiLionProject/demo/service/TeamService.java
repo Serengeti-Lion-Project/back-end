@@ -3,9 +3,11 @@ package SerengetiLionProject.demo.service;
 import SerengetiLionProject.demo.domain.Team;
 import SerengetiLionProject.demo.repository.MeetPersonalRepository;
 import SerengetiLionProject.demo.repository.TeamRepository;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public class TeamService {
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
 
     //TestMeetPersonalService : SpringCOnfig에서 등록록
     public TeamService(TeamRepository teamRepository) {
@@ -21,4 +23,5 @@ public class TeamService {
     public Team findTeamById(Long tid){
         return teamRepository.findById(tid);
     }
+
 }

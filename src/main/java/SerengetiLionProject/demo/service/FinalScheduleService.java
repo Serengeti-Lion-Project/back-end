@@ -4,9 +4,11 @@ import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.repository.FinalScheduleRepository;
 import SerengetiLionProject.demo.repository.MeetGroupRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public class FinalScheduleService {
     private FinalScheduleRepository finalScheduleRepository;
 

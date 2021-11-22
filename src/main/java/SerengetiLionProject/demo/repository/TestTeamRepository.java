@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 public class TestTeamRepository implements TeamRepository{
     @Autowired
     private MongoTemplate mongoTemplate;
+
     @Override
     public Team save(Team team){
         mongoTemplate.insert(team);

@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.*;
 
 
+// when2meet 개인
 public class TestMeetPersonalRepository implements MeetPersonalRepository {
 
     @Autowired

@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
-    <title>팀 meet 만드는 페이지</title>
+    <title>다회성 만드는 페이지</title>
 </head>
 <body>
 <h3>구성자체는 일회용 meet 생성 페이지 (onceGroup.html)이랑 똑같은데, team_id를 저장해둬야해서,,, jsp로 만들었어요</h3>

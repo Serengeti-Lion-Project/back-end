@@ -3,7 +3,7 @@ package SerengetiLionProject.demo.auth;
 import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.dto.Role;
 import SerengetiLionProject.demo.dto.SessionUser;
-import SerengetiLionProject.demo.service.SequenceGeneratorService;
+import SerengetiLionProject.demo.service.generator.SequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
