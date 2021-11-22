@@ -3,6 +3,7 @@ package SerengetiLionProject.demo;
 import SerengetiLionProject.demo.repository.*;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
+import SerengetiLionProject.demo.service.TeamService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,5 +39,15 @@ public class SpringConfig {
     @Bean
     public FinalScheduleRepository finalScheduleRepository(){
         return new TestFinalScheduleRepository();
+    }
+
+    @Bean
+    public TeamRepository teamRepository(){
+        return new TestTeamRepository();
+    }
+
+    @Bean
+    public TeamService teamService(){
+        return new TeamService(teamRepository());
     }
 }

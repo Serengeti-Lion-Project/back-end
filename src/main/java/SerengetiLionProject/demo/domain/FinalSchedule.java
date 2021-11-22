@@ -3,12 +3,13 @@ package SerengetiLionProject.demo.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 
-@Getter
+@NoArgsConstructor
 @Document(collection="final_schedule")
 @Data
 public class FinalSchedule {
