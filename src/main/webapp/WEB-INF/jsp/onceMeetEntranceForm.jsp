@@ -5,8 +5,8 @@
 
     <form action="/once/new/createUser" method="post">
     <div class="form-group">
-                <label for="page_pw">방 비밀번호</label>
-                <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">
+        <label for="page_pw">방 비밀번호</label>
+        <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">
             </div>
         <div class="form-group">
             <label for="name">이름</label>
@@ -22,6 +22,7 @@
         </div>
         <input type="hidden" id="url_id" name="url_id" value="${urlid}">
         <input type="hidden" id="title" name="title" value="${title}">
+<!-- model에서 보낸 title, urlid 출력-->
         <button type="submit">등록</button>
     </form>
 </div> <!-- /container -->

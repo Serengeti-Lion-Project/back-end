@@ -1,6 +1,7 @@
 package SerengetiLionProject.demo;
 
 import SerengetiLionProject.demo.repository.*;
+import SerengetiLionProject.demo.service.AvailableTimeService;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.TeamService;
@@ -49,5 +50,15 @@ public class SpringConfig {
     @Bean
     public TeamService teamService(){
         return new TeamService(teamRepository());
+    }
+  
+    @Bean
+    public AvailableTimeRepository availableTimeRepository(){
+        return new TestAvailableTimeRepository();
+    }
+
+    @Bean
+    public AvailableTimeService availableTimeService(){
+        return new AvailableTimeService(availableTimeRepository());
     }
 }
