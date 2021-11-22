@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>team ID</th>
+                <th>team name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="team : ${teams}">
+                <!--        ${} : 모델 안에 있는 값을 꺼내는 것 -->
+                <td th:text="${team.key}"></td>
+                <td th:text="${team.value}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Schedule Title</th>
+                <th>Schedule Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sc : ${schedules}">
+                <!--        ${} : 모델 안에 있는 값을 꺼내는 것 -->
+                <td th:text="${sc.key}"></td>
+                <td th:text="${sc.value}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

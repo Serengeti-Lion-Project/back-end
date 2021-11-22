@@ -5,6 +5,8 @@ import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.repository.FinalScheduleRepository;
 import SerengetiLionProject.demo.repository.MeetGroupRepository;
 
+import java.util.List;
+
 public class FinalScheduleService {
     private FinalScheduleRepository finalScheduleRepository;
 
@@ -16,5 +18,9 @@ public class FinalScheduleService {
     public Long saveFinalSchedule(FinalSchedule schedule) {
         finalScheduleRepository.save(schedule);
         return schedule.getDate_id();
+    }
+
+    public List<FinalSchedule> findAllbyTeamId(Long tid){
+        return finalScheduleRepository.findAllByTeamId(tid);
     }
 }

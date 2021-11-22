@@ -4,6 +4,7 @@ import SerengetiLionProject.demo.repository.*;
 import SerengetiLionProject.demo.service.AvailableTimeService;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
+import SerengetiLionProject.demo.service.TeamService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,16 @@ public class SpringConfig {
         return new TestFinalScheduleRepository();
     }
 
+    @Bean
+    public TeamRepository teamRepository(){
+        return new TestTeamRepository();
+    }
+
+    @Bean
+    public TeamService teamService(){
+        return new TeamService(teamRepository());
+    }
+  
     @Bean
     public AvailableTimeRepository availableTimeRepository(){
         return new TestAvailableTimeRepository();
