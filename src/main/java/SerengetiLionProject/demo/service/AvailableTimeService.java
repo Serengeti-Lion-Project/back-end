@@ -15,9 +15,9 @@ public class AvailableTimeService {
     }
 
     // 가능한 시간대 체크한 거 db에 저장
-    public Long saveTime(AvailableTime availableTime) {
+    public AvailableTime saveTime(AvailableTime availableTime) {
         AvailableTime time = availableTimeRepository.save(availableTime);
-        return time.getUrl_id();
+        return time;
     }
 
     public List<AvailableTime> findAll(){
