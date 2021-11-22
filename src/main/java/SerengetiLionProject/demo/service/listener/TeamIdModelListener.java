@@ -1,7 +1,7 @@
-package SerengetiLionProject.demo.service;
+package SerengetiLionProject.demo.service.listener;
 
-import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.Team;
+import SerengetiLionProject.demo.service.generator.NewSequenceGeneratorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
