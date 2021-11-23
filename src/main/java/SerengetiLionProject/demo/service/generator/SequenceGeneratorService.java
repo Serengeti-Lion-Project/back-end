@@ -1,4 +1,4 @@
-package SerengetiLionProject.demo.service;
+package SerengetiLionProject.demo.service.generator;
 
 
 import SerengetiLionProject.demo.domain.AutoIncrementSequence;

@@ -118,56 +118,28 @@ public class MeetOnceController {
     /**
      * 입장 후 사용자가 가능한 시간 입력한 데이터를 DB에 저장
      */
-    @PostMapping(value = "/once/{title}/{urlid}/enter")
-    public String markAvailableTime(MeetOnceAvailableTimeForm meetOnceAvailableTimeForm, Model model) {
-        AvailableTime availableTime = new AvailableTime(
-                Long.valueOf(String.valueOf(model.getAttribute("url_id"))), // 입장전 페이지의 model에 있던 값을 가져옴
-                String.valueOf(model.getAttribute("title")),
-                String.valueOf(model.getAttribute("name")),
-                meetOnceAvailableTimeForm.getDay(),
-                meetOnceAvailableTimeForm.getStart_time(),
-                meetOnceAvailableTimeForm.getEnd_time()
-        );
-        availableTimeService.saveTime(availableTime);
-        return "";
-    }
+//    @PostMapping(value = "/once/{title}/{urlid}/enter")
+//    public String markAvailableTime(MeetOnceAvailableTimeForm meetOnceAvailableTimeForm, Model model) {
+//        AvailableTime availableTime = new AvailableTime(
+//                Long.valueOf(String.valueOf(model.getAttribute("url_id"))), // 입장전 페이지의 model에 있던 값을 가져옴
+//                String.valueOf(model.getAttribute("title")),
+//                String.valueOf(model.getAttribute("name")),
+//                meetOnceAvailableTimeForm.getMonday_start_time(),
+//                meetOnceAvailableTimeForm.getMonday_end_time(),
+//                meetOnceAvailableTimeForm.getTuesday_start_time(),
+//                meetOnceAvailableTimeForm.getTuesday_end_time(),
+//                meetOnceAvailableTimeForm.getWednesday_start_time(),
+//                meetOnceAvailableTimeForm.getWednesday_end_time(),
+//                meetOnceAvailableTimeForm.getThursday_start_time(),
+//                meetOnceAvailableTimeForm.getThursday_end_time(),
+//                meetOnceAvailableTimeForm.getFriday_start_time(),
+//                meetOnceAvailableTimeForm.getFriday_end_time(),
+//                meetOnceAvailableTimeForm.getSaturday_start_time(),
+//                meetOnceAvailableTimeForm.getSaturday_end_time(),
+//                meetOnceAvailableTimeForm.getSunday_start_time(),
+//                meetOnceAvailableTimeForm.getSunday_end_time()
+//                );
+//        AvailableTime time = availableTimeService.saveTime(availableTime);
+//        return "redirect:/once/" + time.getTitle() + "/" + time.getUrl_id();
+//    }
 }
-//        meetOnceAvailableTimeForm.
-
-//        public String create(MeetOnceNewGroupForm form){
-//            //Long url_id, String title, String start_date, String end_date, Integer start_time, Integer end_time, String page_pw
-//            System.out.println("meet group post mapping: title:"+form.getTitle());
-//            MeetGroup meetGroup=new MeetGroup(form.getTitle(),form.getStart_date().toString(),form.getEnd_date().toString(),form.getStart_time(),form.getEnd_time(),form.getPage_pw());
-//            Long get_url=meetGroupService.SaveGroup(meetGroup); // meet 만들고 리턴받은 url_id 값 저장
-//            Long url_id=get_url;
-//            String url=url_id.toString();
-//            String title=meetGroup.getTitle();
-//            return "redirect:/once/"+title+"/"+url; //beforeEnter.html
-//
-//            //어떻게 title이랑 id마다 다른 링크 보내는거야...ㅠㅠ
-//        }
-
-//        //form에 hidden input으로 값 넣어둔 url_id랑 title 얻어오기
-//        String url_id= meetOnceEntranceForm.getUrl_id();
-//        String title= meetOnceEntranceForm.getTitle();
-//
-//        //url+title로 방 비밀번호 검증작업 필요!
-//        MeetGroup group=meetGroupService.findOne(Long.parseLong(url_id));
-//        if(group!=null){
-//            String page_pw=group.getPage_pw();
-//            if(!meetOnceEntranceForm.getPage_pw().equals(page_pw)){
-//                return "redirect:/once/"+title+"/"+url_id;
-//            }
-//        }else{
-//            return "redirect:/once";
-//        }
-//
-//        MeetPersonal person=new MeetPersonal(Long.parseLong(url_id),title, meetOnceEntranceForm.getName(), meetOnceEntranceForm.getUpw());
-//        String val=personalService.saveNewUser(person); //여기서 중복유저 확인, 신규유저 확인합니다.
-//        if(val.equals("userCheckSuccess")||val.equals(person.getName())){ // 신규 등록 유저 이거나 기존 유저인 경우
-//            model.addAttribute("resultText",val);
-//            model.addAttribute("name",person.getName());
-//            return "redirect:/once/"+title+"/"+url_id+"/enter"; //입장하면 (신규유저이든 아니면 기존유저 확인이든) 보내줘야 하는 url로 다시 보내주기
-//        }
-//        else
-//            return "redirect:/once/"+title+"/"+url_id;  //비밀번호 (개인비밀번호 or 팀비밀번호) 틀리면 처음페이지로 redirect

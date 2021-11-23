@@ -4,7 +4,11 @@ import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.repository.FinalScheduleRepository;
 import SerengetiLionProject.demo.repository.MeetGroupRepository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+@Transactional
 public class FinalScheduleService {
     private FinalScheduleRepository finalScheduleRepository;
 
@@ -16,5 +20,9 @@ public class FinalScheduleService {
     public Long saveFinalSchedule(FinalSchedule schedule) {
         finalScheduleRepository.save(schedule);
         return schedule.getDate_id();
+    }
+
+    public List<FinalSchedule> findAllbyTeamId(Long tid){
+        return finalScheduleRepository.findAllByTeamId(tid);
     }
 }

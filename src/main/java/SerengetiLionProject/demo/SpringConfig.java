@@ -39,6 +39,16 @@ public class SpringConfig {
     }
 
     @Bean
+    public TeamRepository teamRepository(){
+        return new TestTeamRepository();
+    }
+
+    @Bean
+    public TeamService teamService(){
+        return new TeamService(teamRepository());
+    }
+  
+    @Bean
     public AvailableTimeRepository availableTimeRepository(){
         return new TestAvailableTimeRepository();
     }
@@ -49,7 +59,19 @@ public class SpringConfig {
     }
 
     @Bean
+
     public MeetNoteRepository noteRepository() { return new TestMeetNoteRepository();}
     @Bean
     public MeetNoteService meetNoteService() {return new MeetNoteService(noteRepository()); }
+
+    public UserService userService(){
+        return new UserService(userRepository());
+    }
+
+    @Bean
+    public UserRepository userRepository(){
+        return new TestUserRepository();
+    }
+
+
 }
