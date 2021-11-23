@@ -59,6 +59,11 @@ public class SpringConfig {
     }
 
     @Bean
+
+    public MeetNoteRepository noteRepository() { return new TestMeetNoteRepository();}
+    @Bean
+    public MeetNoteService meetNoteService() {return new MeetNoteService(noteRepository()); }
+
     public UserService userService(){
         return new UserService(userRepository());
     }
@@ -67,5 +72,6 @@ public class SpringConfig {
     public UserRepository userRepository(){
         return new TestUserRepository();
     }
+
 
 }

@@ -67,6 +67,7 @@ public class UserController {
                 User.class
         );
         return "redirect:/";
+
     }
 
     @GetMapping("/mypage/{uid}")
