@@ -1,10 +1,7 @@
 package SerengetiLionProject.demo;
 
 import SerengetiLionProject.demo.repository.*;
-import SerengetiLionProject.demo.service.AvailableTimeService;
-import SerengetiLionProject.demo.service.FinalScheduleService;
-import SerengetiLionProject.demo.service.MeetGroupService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
+import SerengetiLionProject.demo.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -50,4 +47,9 @@ public class SpringConfig {
     public AvailableTimeService availableTimeService(){
         return new AvailableTimeService(availableTimeRepository());
     }
+
+    @Bean
+    public MeetNoteRepository noteRepository() { return new TestMeetNoteRepository();}
+    @Bean
+    public MeetNoteService meetNoteService() {return new MeetNoteService(noteRepository()); }
 }

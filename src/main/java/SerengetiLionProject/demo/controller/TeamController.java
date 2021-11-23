@@ -2,10 +2,13 @@ package SerengetiLionProject.demo.controller;
 
 import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.MeetGroup;
+import SerengetiLionProject.demo.domain.MeetNote;
 import SerengetiLionProject.demo.dto.MeetTeamFinalDateForm;
 import SerengetiLionProject.demo.dto.MeetTeamNewGroupForm;
+import SerengetiLionProject.demo.dto.MeetTeamNewNoteForm;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
+import SerengetiLionProject.demo.service.MeetNoteService;
 import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +23,17 @@ public class TeamController {
     private MeetGroupService meetGroupService;
     private TestMeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
+    private MeetNoteService meetNoteService;
+
 
     @Autowired
-    public TeamController(MeetGroupService onceMemberService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService) {
+    public TeamController(MeetGroupService onceMemberService, TestMeetPersonalService personalService,
+                          FinalScheduleService finalScheduleService, MeetNoteService meetNoteService) {
         this.meetGroupService = onceMemberService;
         this.personalService=personalService;
         this.finalScheduleService=finalScheduleService;
+        this.meetNoteService=meetNoteService;
+
     }
 
 
@@ -69,4 +77,28 @@ public class TeamController {
         finalScheduleService.saveFinalSchedule(date);
         return "redirect:/";
     }
+    //팀메인페이지
+    /**@GetMapping ("/teampage/{teamid}")
+    public String mainTeamPage(){
+
+
+    }*/
+    //현재 팀 (team_id가 할당되어있다 가정
+    @GetMapping(value="/teampage/{teamid}/new")
+    public String createNewTeamNote(Model model, @PathVariable("teamid") String teamid){
+        Long team_id=Long.parseLong(teamid);
+        model.addAttribute("team_id",team_id);
+        return "createNewTeamNote";
+    }
+    @PostMapping(value = "/teampage/newnote")
+    public String createNewTeamNoteForm(MeetTeamNewNoteForm form){
+        Long team_id = form.getTeam_id();
+        MeetNote meetNote=new MeetNote(form.getNote_title(),form.getNote_content(),form.getWrite_date().toString());
+        meetNote.setTeam_id(team_id);
+        meetNoteService.SaveNote(meetNote); // 저장하면 note_id 리턴
+        String teamid=team_id.toString();
+
+        return "redirect:/teampage/"+teamid; //생성한 후 새롭게 만들어진 meet페이지로 넘겨줌!
+    }
+
 }

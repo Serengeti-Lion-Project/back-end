@@ -47,7 +47,7 @@ public class UserController {
                 Query.query(Criteria.where("_id").is(uid)), Update.update("nickname",nickname), User.class);
         return "redirect:/";
 
-        //어떻게 title이랑 id마다 다른 링크 보내는거야...ㅠㅠ
+
     }
 
     /* 회원관리 예제 테스트 코드
