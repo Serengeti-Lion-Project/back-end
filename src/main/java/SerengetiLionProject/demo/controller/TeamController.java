@@ -19,13 +19,11 @@ import SerengetiLionProject.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 @Controller
 public class TeamController {
@@ -36,6 +34,7 @@ public class TeamController {
     private MeetNoteService meetNoteService;
     private TeamService teamService;
     private UserService userService;
+    private Object model;
 
     @Autowired
     public TeamController(MeetGroupService meetGroupService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService, TeamService teamService, UserService userService) {
@@ -51,9 +50,8 @@ public class TeamController {
         return "thymeleaf/makeTeam"; // makeTeam.html
     }
 
-    @ResponseBody
     @PostMapping("/fixed/makeTeam")
-    public String teamMake(TeamMakingForm teamMakingForm, HttpServletRequest request){
+    public String teamMake(TeamMakingForm teamMakingForm, HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 
@@ -69,10 +67,10 @@ public class TeamController {
         for(int i=0;i<emails.length;i++){ // 초대할 팀원 한명씩 이미 존재하는 유저인지 확인
             User user = userService.findByEmail(emails[i]);
             if(user==null){ // 해당 이메일을 갖는 유저가 존재하지 않는다면
-
-                return "/fixed/makeTeam"; // front에게 메세지 보내야 함 ******************
+                model.addAttribute("msg",emails[i]+"는 없는 이메일입니다");
+                return "thymeleaf/makeTeam"; // front에게 msg 보냄
             }
-            else{ // 유저가 존재하면 teamId에 추가해준다. ******************
+            else{ // 유저가 존재하면 teamId에 추가해준다.
                 userService.saveTeamId(user.getTeam_id(), user.getEmail(), team_id);
             }
         }
