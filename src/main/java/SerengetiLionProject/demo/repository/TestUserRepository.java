@@ -27,7 +27,7 @@ public class TestUserRepository implements UserRepository{
         System.out.println("teamIds+teamId = " + teamIds+teamId);
         User user=mongoTemplate.findAndModify(
                 query,
-                Update.update("teamId", teamIds+teamId+','),
+                Update.update("team_id", teamIds+teamId+','),
                 User.class
         );
         return user;

@@ -6,7 +6,7 @@ import SerengetiLionProject.demo.domain.MeetGroup;
 import SerengetiLionProject.demo.domain.MeetNote;
 
 
-import SerengetiLionProject.demo.dto.MeetTeamNewNoteForm;
+import SerengetiLionProject.demo.dto.*;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.MeetNoteService;
@@ -14,9 +14,6 @@ import SerengetiLionProject.demo.service.TestMeetPersonalService;
 
 import SerengetiLionProject.demo.domain.Team;
 import SerengetiLionProject.demo.domain.User;
-import SerengetiLionProject.demo.dto.MeetTeamFinalDateForm;
-import SerengetiLionProject.demo.dto.MeetTeamNewGroupForm;
-import SerengetiLionProject.demo.dto.TeamMakingForm;
 import SerengetiLionProject.demo.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class TeamController {
@@ -32,13 +33,7 @@ public class TeamController {
     private MeetGroupService meetGroupService;
     private TestMeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
-
     private MeetNoteService meetNoteService;
-
-
-
-
-
     private TeamService teamService;
     private UserService userService;
 
@@ -49,28 +44,39 @@ public class TeamController {
         this.finalScheduleService = finalScheduleService;
         this.teamService = teamService;
         this.userService = userService;
-
     }
 
+    @GetMapping("/fixed/makeTeam") // 다회성 팀 만들기 페이지
+    public String teamMake(){
+        return "thymeleaf/makeTeam"; // makeTeam.html
+    }
+
+    @ResponseBody
     @PostMapping("/fixed/makeTeam")
-    public String teamMake(TeamMakingForm teamMakingForm){
+    public String teamMake(TeamMakingForm teamMakingForm, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+
         String team_name = teamMakingForm.getTeam_name(); // 팀명
         String invited_members = teamMakingForm.getInvited_members(); // 초대한 팀원
         String[] emails = invited_members.split(",");
-        Team team = new Team(team_name); // 팀 객체 생성
+        // 팀 생성 시 팀장 아이디도 넣어줘야 함
+
+        Team team = new Team(team_name,sessionUser.getUid()); // 팀 객체 생성 (팀장 id - 현재 로그인한 애)
         Team team_temp = teamService.saveTeam(team);
         Long team_id = team_temp.get_id(); // 팀 id 가져오기
         String teamId = team_id.toString();
         for(int i=0;i<emails.length;i++){ // 초대할 팀원 한명씩 이미 존재하는 유저인지 확인
             User user = userService.findByEmail(emails[i]);
             if(user==null){ // 해당 이메일을 갖는 유저가 존재하지 않는다면
-                return ""; // front에게 메세지 보내야 함 ******************
+
+                return "/fixed/makeTeam"; // front에게 메세지 보내야 함 ******************
             }
             else{ // 유저가 존재하면 teamId에 추가해준다. ******************
                 userService.saveTeamId(user.getTeam_id(), user.getEmail(), team_id);
             }
         }
-        return "/fixed/"+teamId; //    <input type="hidden" id="team_id" name="team_id" value="${team_id}">
+        return "redirect:/fixed/"+teamId; //    <input type="hidden" id="team_id" name="team_id" value="${team_id}">
     }
 
     //현재 팀 (team_id가 할당되어있다 가정 -> '새로운 meet 만들기' 누르면 여기로 넘어옴

@@ -13,6 +13,7 @@ public class TeamService {
     public TeamService(TeamRepository teamRepository) {
         this.teamRepository=teamRepository;
     }
+
     public Team saveTeam(Team team){
         if(team.getName().equals(""))
             return null;
@@ -20,8 +21,7 @@ public class TeamService {
         return team;
     }
 
-    public Team findTeamById(Long tid){
+    public Team findTeamById(Long tid) {
         return teamRepository.findById(tid);
     }
-
 }

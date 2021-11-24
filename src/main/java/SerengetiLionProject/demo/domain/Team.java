@@ -16,9 +16,11 @@ public class Team {
     @Id
     private Long _id; // auto increment 적용
     private String name;
+    private Long leader_uid; // 팀장 id
 
     @Builder
-    public Team(String name){
-        this.name=name;
+    public Team(String name, Long leader_uid) {
+        this.name = name;
+        this.leader_uid = leader_uid;
     }
 }
