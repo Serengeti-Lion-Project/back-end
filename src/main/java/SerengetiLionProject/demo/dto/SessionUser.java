@@ -20,5 +20,6 @@ public class SessionUser implements Serializable {
         this.email = user.getEmail();
         this.nickname=user.getNickname();
         this.uid=user.get_id();
+        this.team_id = user.getTeam_id();
     }
 }

@@ -50,6 +50,11 @@ public class UserController {
         // 로그인한 순간부터 가지고 있는 session 에서 user가져와서 이미 가입한 유저인지 확인
         if (user.getNickname().equals("")) // 닉네임이 없다면 닉네임 입력 페이지로
             return "thymeleaf/users/setUserNicknameForm";
+
+        if((user.getTeam_id()).equals("")){ // 팀이 없는 경우 다회성 팀 만들기로 연결해주기
+            return "redirect:/fixed/makeTeam";
+        }
+
         String uid = user.getUid().toString();
         return "redirect:/mypage/" + uid; // 닉네임이 있다면 마이페이지로
     }
@@ -76,9 +81,6 @@ public class UserController {
         HashMap<Long, String> teams = new HashMap<>();
         HashMap<String, String> schedules = new HashMap<>();
         User user = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(id)), User.class);
-        if((user.getTeam_id()).equals("")){ // 팀이 없는 경우 다회성 팀 만들기로 연결해주기?
-            return "thymeleaf/makeTeam";
-        }
 
         String[] teamList = user.getTeam_id().split(",");
         for (int i = 0; i < teamList.length; i++) {
@@ -95,7 +97,7 @@ public class UserController {
         model.addAttribute("teams", teams);
         model.addAttribute("schedules", schedules);
 
-        return "thymeleaf/makeTeam";
-//        return "thymeleaf/users/mypage";
+//        return "thymeleaf/makeTeam";
+        return "thymeleaf/users/mypage";
     }
 }
