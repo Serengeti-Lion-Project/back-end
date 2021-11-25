@@ -74,5 +74,10 @@ public class SpringConfig {
         return new TestUserRepository();
     }
 
+    @Bean
+    public NewTestPersonalService newMeetPersonalservice(){return new NewTestPersonalService(newMeetPersonalRepository());}
+
+    @Bean
+    public NewMeetPersonalRepository newMeetPersonalRepository(){return new NewTestMeetPersonalRepository();}
 
 }
