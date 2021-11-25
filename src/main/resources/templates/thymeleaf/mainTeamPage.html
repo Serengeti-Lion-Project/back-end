@@ -1,29 +1,27 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지_팀별화면</title>
+</head>
 <body>
 <div class="container">
     <div>
-
         <table>
             <thead>
             <tr>
-                <th>team ID</th>
-                <th>team name</th>
+                <th>팀일정</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-                <td th:text="${team.key}"></td>
-                <td>
-                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"/>
-                        <td th:text="${team.value}"></td>
-                </td>
+            <td th:text="${team.final_date}"></td>
+
+            </a>
+            </td>
             </tbody>
         </table>
-        <a href="http://localhost:8080/fixed/makeTeam">
-            <div class="buttonBox">
-                팀추가
-            </div>
-        </a>
+
     </div>
 
     <div>
@@ -36,7 +34,6 @@
             </thead>
             <tbody>
             <tr th:each="sc : ${schedules}">
-                <!--        ${} : 모델 안에 있는 값을 꺼내는 것 -->
                 <td th:text="${sc.key}"></td>
                 <td th:text="${sc.value}"></td>
 

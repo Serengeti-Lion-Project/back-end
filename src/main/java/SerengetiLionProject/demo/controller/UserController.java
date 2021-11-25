@@ -86,7 +86,7 @@ public class UserController {
         for (int i = 0; i < teamList.length; i++) {
             Long tid = Long.parseLong(teamList[i]);
             Team team = teamService.findTeamById(tid);
-            teams.put(tid, team.getName());
+            teams.put(tid, team.getName()); // 팀아이디, 팀이름
             List<FinalSchedule> scheduleList = finalScheduleService.findAllbyTeamId(tid);
             if (scheduleList.isEmpty())
                 continue;
@@ -97,7 +97,6 @@ public class UserController {
         model.addAttribute("teams", teams);
         model.addAttribute("schedules", schedules);
 
-//        return "thymeleaf/makeTeam";
         return "thymeleaf/users/mypage";
     }
 }

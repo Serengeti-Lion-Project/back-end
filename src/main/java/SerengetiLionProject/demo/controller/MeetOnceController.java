@@ -53,7 +53,7 @@ public class MeetOnceController {
         Long url_id = get_url;
         String url = url_id.toString();
         String title = meetGroup.getTitle();
-        return "redirect:/once/" + title + "/" + url; //beforeEnter.html
+        return "redirect:/once/" + title + "/" + url;
     }
 
     /**
@@ -63,17 +63,17 @@ public class MeetOnceController {
     @GetMapping(value = "/once/{title}/{urlid}")
     public String newMeetUserForm(Model model, @PathVariable("title") String title, @PathVariable("urlid") String urlid, HttpServletRequest request) {
         Long id = Long.parseLong(urlid);
-
         //Model에 값 넣어서 form으로 전달 -> 나중에 다시 바로 아래 코드 postMapping에서 제대로 된 url로 보내주기 위한,,,,,, 바보가튼 방법입니다.
         //
         model.addAttribute("urlid", id);
         model.addAttribute("title", title);
-        return "onceMeetEntranceForm";
+        System.out.println("id = " + id);
+        System.out.println("title = " + title);
+        return "thymeleaf/onceMeetEntranceForm";
     }
 
     /**
-     * onceMeetEntranceForm.jsp (입장 전 입력하는 form 화면) 파일에서의 form에 이름, 방 비밀번호, 개인비밀번호 입력하면 여기로 옴
-     * 왜 value가 "/meetonce/new/create" 인가요? -> ,, form에서 action으로 변수값을 넣어주는게 인터넷에서 알려주는대로 해도 안돼서,,, 그냥 여기서 redirect하기로 했어요
+     * onceMeetEntranceForm.html (입장 전 입력하는 form 화면)
      */
     // 입장전 페이지에서 입장하기 버튼 누른 경우에 폼에 입력한 데이터 여기로 넘어옴
     @PostMapping(value = "/once/new/createUser")
@@ -81,7 +81,8 @@ public class MeetOnceController {
         //form에 hidden input으로 값 넣어둔 url_id랑 title 얻어오기
         String url_id = meetOnceEntranceForm.getUrl_id();
         String title = meetOnceEntranceForm.getTitle();
-
+        System.out.println("url_id = " + url_id);
+        System.out.println("title = " + title);
         //url+title로 방 비밀번호 검증작업 필요!
         MeetGroup group = meetGroupService.findOne(Long.parseLong(url_id));
         if (group != null) {

@@ -37,6 +37,11 @@ public class TestMeetGroupRepository implements MeetGroupRepository{
     }
 
     @Override
+    public MeetGroup findByTeam(Long team_id) {
+        return null;
+    }
+
+    @Override
     public List<MeetGroup> findAll() {
         return mongoTemplate.findAll(MeetGroup.class);
     }
