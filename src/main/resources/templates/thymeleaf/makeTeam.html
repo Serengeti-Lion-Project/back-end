@@ -5,7 +5,7 @@
     <title>다회성 팀 만들기</title>
 </head>
 <body>
-
+<div>뒤로가기 버튼 있으면 좋겠어요</div>
 <form action="/fixed/makeTeam" method="post">
     팀 이름 입력 : <input id = "team_name" name ="team_name" type="text" placeholder="팀명을 입력하세요"> <br>
 
@@ -13,9 +13,8 @@
 
     <input type="submit" value = "팀 생성하기">
     <div>
-        <p th:text="${msg}">하이</p>
+        <p th:text="${msg}">하이</p> <!--    이 msg 값을 alert로 띄워주시면 됩니다-->
     </div>
-<!--    이 msg 값을 alert로 띄워주시면 됩니다-->
 
 </form>
 </body>

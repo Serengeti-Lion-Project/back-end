@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="UTF-8">
+  <title>팀 meet 페이지</title>
+</head>
+<body>
+<h3>현재 팀의 새롭게 만들어진 meet 페이지! 인데 확정날짜만,,, 만들었씁니다</h3>
+<form action="/team/confirmMeetDate" method="post">
+  확정날짜 : <input id = "final_date" name ="final_date" type="date"> <br>
+  시작시간 : <input id = "start_hour" name="start_hour" type="text"> : <input id = "start_min" name="start_min" type="text">
+  끝 시간 : <input id = "end_hour" name="end_hour" type="text"> : <input id = "end_min" name="end_min" type="text">
+  <input type="submit" value = "시작하기">
+  <input type="hidden" id="team_id" name="team_id" th:value="${teamid}">
+  <input type="hidden" id="title" name="title" th:value="${title}">
+</form>
+</body>
+</html>
