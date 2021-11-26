@@ -1,7 +1,6 @@
 package SerengetiLionProject.demo.service;
 
 import SerengetiLionProject.demo.domain.User;
-import SerengetiLionProject.demo.repository.MeetPersonalRepository;
 import SerengetiLionProject.demo.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 

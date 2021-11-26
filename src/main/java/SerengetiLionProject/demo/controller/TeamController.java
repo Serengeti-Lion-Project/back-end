@@ -10,7 +10,6 @@ import SerengetiLionProject.demo.dto.*;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.MeetNoteService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
 
 import SerengetiLionProject.demo.domain.Team;
 import SerengetiLionProject.demo.domain.User;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +32,7 @@ import java.util.List;
 public class TeamController {
 
     private MeetGroupService meetGroupService;
-    private TestMeetPersonalService personalService;
+    private MeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
     private MeetNoteService meetNoteService;
     private TeamService teamService;
@@ -40,7 +40,9 @@ public class TeamController {
     private Object model;
 
     @Autowired
+
     public TeamController(MeetGroupService meetGroupService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService, TeamService teamService, UserService userService,MeetNoteService meetNoteService) {
+
         this.meetGroupService = meetGroupService;
         this.personalService = personalService;
         this.finalScheduleService = finalScheduleService;
