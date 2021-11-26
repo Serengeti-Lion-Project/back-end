@@ -136,33 +136,6 @@ public class TeamController {
         return "thymeleaf/mainTeamPage";
     }
 
-    /**
-    //팀메인페이지
-    @GetMapping ("/teampage/{teamid}")
-    public String mainTeamPage(@PathVariable("teamid") String teamid, Model model){
-        Long team_id = Long.parseLong(teamid);
-        HashMap<String, String> write_date = new HashMap<>();
-        HashMap<String, String> note_title = new HashMap<>();
-        List<MeetNote> meetNoteList = MeetNoteService.findAllByTeam_id(team_id); // 팀 아이디에 맞는 쿼리 다 찾음
-
-        String[] teamList = user.getTeam_id().split(",");
-        for (int i = 0; i < teamList.length; i++) {
-            Long tid = Long.parseLong(teamList[i]);
-            Team team = teamService.findTeamById(tid);
-            teams.put(tid, team.getName());
-            List<FinalSchedule> scheduleList = finalScheduleService.findAllbyTeamId(tid);
-            if (scheduleList.isEmpty())
-                continue;
-            for (int j = 0; j < scheduleList.size(); j++) {
-                schedules.put(scheduleList.get(j).getSchedule_title(), scheduleList.get(j).getFinal_date());
-            }
-        }
-        model.addAttribute("teams", teams);
-        model.addAttribute("schedules", schedules);
-
-//        return "thymeleaf/makeTeam";
-        return "thymeleaf/users/mypage";
-*/
 
     //현재 팀 (team_id가 할당되어있다 가정
     @GetMapping(value="/teampage/new/{teamid}")
