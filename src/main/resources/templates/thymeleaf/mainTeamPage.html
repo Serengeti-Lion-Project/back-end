@@ -37,7 +37,7 @@
                 </tr>
             </thead>
             <tbody>
-            <tr th:each="note : ${meetNoteList}">
+            <tr th:each="note : ${notes}">
                 <td th:text="${note.note_title}"></td>
                 <td th:text="${note.note_content}"></td>
                 <td th:text="${note.write_date}"></td>

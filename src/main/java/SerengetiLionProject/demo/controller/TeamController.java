@@ -2,17 +2,14 @@ package SerengetiLionProject.demo.controller;
 
 import SerengetiLionProject.demo.domain.FinalSchedule;
 import SerengetiLionProject.demo.domain.MeetGroup;
-
 import SerengetiLionProject.demo.domain.MeetNote;
-
+import SerengetiLionProject.demo.domain.Team;
+import SerengetiLionProject.demo.domain.User;
 
 import SerengetiLionProject.demo.dto.*;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.MeetNoteService;
-
-import SerengetiLionProject.demo.domain.Team;
-import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -41,6 +37,7 @@ public class TeamController {
 
     @Autowired
     public TeamController(MeetGroupService meetGroupService, MeetPersonalService personalService, FinalScheduleService finalScheduleService, MeetNoteService meetNoteService, TeamService teamService, UserService userService) {
+
         this.meetGroupService = meetGroupService;
         this.personalService = personalService;
         this.finalScheduleService = finalScheduleService;
@@ -139,33 +136,6 @@ public class TeamController {
         return "thymeleaf/mainTeamPage";
     }
 
-    /**
-    //팀메인페이지
-    @GetMapping ("/teampage/{teamid}")
-    public String mainTeamPage(@PathVariable("teamid") String teamid, Model model){
-        Long team_id = Long.parseLong(teamid);
-        HashMap<String, String> write_date = new HashMap<>();
-        HashMap<String, String> note_title = new HashMap<>();
-        List<MeetNote> meetNoteList = MeetNoteService.findAllByTeam_id(team_id); // 팀 아이디에 맞는 쿼리 다 찾음
-
-        String[] teamList = user.getTeam_id().split(",");
-        for (int i = 0; i < teamList.length; i++) {
-            Long tid = Long.parseLong(teamList[i]);
-            Team team = teamService.findTeamById(tid);
-            teams.put(tid, team.getName());
-            List<FinalSchedule> scheduleList = finalScheduleService.findAllbyTeamId(tid);
-            if (scheduleList.isEmpty())
-                continue;
-            for (int j = 0; j < scheduleList.size(); j++) {
-                schedules.put(scheduleList.get(j).getSchedule_title(), scheduleList.get(j).getFinal_date());
-            }
-        }
-        model.addAttribute("teams", teams);
-        model.addAttribute("schedules", schedules);
-
-//        return "thymeleaf/makeTeam";
-        return "thymeleaf/users/mypage";
-*/
 
     //현재 팀 (team_id가 할당되어있다 가정
     @GetMapping(value="/teampage/new/{teamid}")
