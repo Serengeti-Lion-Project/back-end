@@ -57,7 +57,7 @@
 <body>
 <div class="inner">
     <div class="titleBox">
-        <h1><td th:text="${title}"/>근데 선택완료하고 새로고침해야 화면에 다시 보여짐 (실시간반영X)</h1>
+        <h1><td th:text="${title}"/></h1>
     </div>
 
     <div class="timeBox">
@@ -232,26 +232,27 @@
         <input type="hidden" name="total_time" th:value="${total_time}">
         <input type="hidden" name="urlid" th:value="${urlid}">
         <input type="hidden" name="name" th:value="${name}">
+        <input type="hidden" name="title" th:value="${title}">
 
     </form>
     <button type="submit" id="submit-test">선택완료</button>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
+                          /*<![CDATA[*/
                           $("#submit-test").click(function(){
                           console.log("clicked!");
                           let myform=document.getElementById('testForm');
                           var formData=new FormData(myform);
+                          var title=/*[[${title}]]*/
+                          var urlid=/*[[${urlid}]]*/
+                          var name=/*[[${name}]]*/
                           formData.append("selectedArray",selectedArray);
-<!--                            $.ajax({-->
-<!--                                  url : "/once/testPersonal",-->
-<!--                                  type : "post",-->
-<!--                                  dataType:'json',-->
-<!--                                  data : formData-->
-<!--                                });-->
-                                fetch('http://localhost:8080/once/testPersonal',{
-                                    method:'POST',
-                                    body:formData
-                                    });
-                             });
+                           fetch('http://localhost:8080/once/testPersonal',{
+                                   method:'POST',
+                                   body:formData,
+                                   redirect:'follow'
+                                   }).then(response=>window.location.href = "http://localhost:8080/once/"+title+"/"+urlid+"/enter?name="+name);
+                           });
+                           /*]]>*/
     </script>
 
 </div>
