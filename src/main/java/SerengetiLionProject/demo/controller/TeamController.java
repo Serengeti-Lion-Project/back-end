@@ -10,7 +10,6 @@ import SerengetiLionProject.demo.dto.*;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.MeetNoteService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
 
 import SerengetiLionProject.demo.domain.Team;
 import SerengetiLionProject.demo.domain.User;
@@ -23,26 +22,28 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class TeamController {
 
     private MeetGroupService meetGroupService;
-    private TestMeetPersonalService personalService;
+    private MeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
     private MeetNoteService meetNoteService;
     private TeamService teamService;
     private UserService userService;
-    private Object model;
+//    private Object model;
 
     @Autowired
-    public TeamController(MeetGroupService meetGroupService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService, TeamService teamService, UserService userService) {
+    public TeamController(MeetGroupService meetGroupService, MeetPersonalService personalService, FinalScheduleService finalScheduleService, MeetNoteService meetNoteService, TeamService teamService, UserService userService) {
         this.meetGroupService = meetGroupService;
         this.personalService = personalService;
         this.finalScheduleService = finalScheduleService;
+        this.meetNoteService = meetNoteService;
         this.teamService = teamService;
         this.userService = userService;
+//        this.model = model;
     }
 
     @GetMapping("/fixed/makeTeam") // 다회성 팀 만들기 페이지
@@ -124,12 +125,15 @@ public class TeamController {
     public String mainTeamPage(Model model, @PathVariable("teamid") String teamid){
         Long team_id = Long.parseLong(teamid);
         Team team = teamService.findTeamById(team_id);
-        meetGroupService.findByTeam(team_id);
+        List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
+        List<MeetNote> notes = meetNoteService.findAllByTeam_id(team_id); // 팀 회의록
         // 팀의 회의 일정
-//        model.addAttribute("meets",);
+        for(int i=0;i<finalSchedules.size();i++){
+            System.out.println("finalSchedules[i] = " + finalSchedules.get(i).getSchedule_title());
+        }
+        model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록
-//        model.addAttribute("notes",);
-
+        model.addAttribute("notes",notes);
         return "thymeleaf/mainTeamPage";
     }
 

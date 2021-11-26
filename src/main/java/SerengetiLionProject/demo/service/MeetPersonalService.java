@@ -2,18 +2,20 @@ package SerengetiLionProject.demo.service;
 
 import SerengetiLionProject.demo.domain.MeetPersonal;
 import SerengetiLionProject.demo.repository.MeetPersonalRepository;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
-public class TestMeetPersonalService {
+public class MeetPersonalService {
 
     private final MeetPersonalRepository personalRepository;
 
     //TestMeetPersonalService : SpringCOnfig에서 등록록록록록
-   public TestMeetPersonalService(MeetPersonalRepository personalRepository) {
+    @Autowired
+    public MeetPersonalService(MeetPersonalRepository personalRepository) {
         this.personalRepository = personalRepository;
     }
 
@@ -50,5 +52,9 @@ public class TestMeetPersonalService {
 
     public List<MeetPersonal> findAll(Long url_id, String title) {
         return personalRepository.findAllByUrlandTitle(url_id,title);
+    }
+
+    public MeetPersonal updatePersonalMeet(Long url_id, String name, ArrayList<ArrayList> availability){
+        return personalRepository.findAndModifyByUrlIdandName(url_id,name,availability);
     }
 }

@@ -6,9 +6,7 @@ import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.dto.SessionUser;
 import SerengetiLionProject.demo.dto.UserNickNameForm;
 import SerengetiLionProject.demo.service.FinalScheduleService;
-import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.TeamService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -30,15 +28,11 @@ public class UserController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    private MeetGroupService meetGroupService;
-    private TestMeetPersonalService personalService;
     private FinalScheduleService finalScheduleService;
     private TeamService teamService;
 
     @Autowired
-    public UserController(MeetGroupService onceMemberService, TestMeetPersonalService personalService, FinalScheduleService finalScheduleService, TeamService teamService) {
-        this.meetGroupService = onceMemberService;
-        this.personalService = personalService;
+    public UserController(FinalScheduleService finalScheduleService, TeamService teamService) {
         this.finalScheduleService = finalScheduleService;
         this.teamService = teamService;
     }
@@ -77,6 +71,7 @@ public class UserController {
 
     @GetMapping("/mypage/{uid}")
     public String myPage(@PathVariable("uid") String uid, Model model) {
+        System.out.println("uid = " + uid);
         Long id = Long.parseLong(uid);
         HashMap<Long, String> teams = new HashMap<>();
         HashMap<String, String> schedules = new HashMap<>();

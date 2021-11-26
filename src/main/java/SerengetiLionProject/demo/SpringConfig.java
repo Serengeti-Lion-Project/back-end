@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class SpringConfig {
 
     @Bean
-    public TestMeetPersonalService personalService(){
-        return new TestMeetPersonalService(personalRepository());
+    public MeetPersonalService personalService(){
+        return new MeetPersonalService(personalRepository());
     }
 
     @Bean
@@ -47,16 +47,6 @@ public class SpringConfig {
     public TeamService teamService(){
         return new TeamService(teamRepository());
     }
-  
-    @Bean
-    public AvailableTimeRepository availableTimeRepository(){
-        return new TestAvailableTimeRepository();
-    }
-
-    @Bean
-    public AvailableTimeService availableTimeService(){
-        return new AvailableTimeService(availableTimeRepository());
-    }
 
     @Bean
     public MeetNoteRepository noteRepository() { return new TestMeetNoteRepository();}
@@ -73,6 +63,5 @@ public class SpringConfig {
     public UserRepository userRepository(){
         return new TestUserRepository();
     }
-
 
 }

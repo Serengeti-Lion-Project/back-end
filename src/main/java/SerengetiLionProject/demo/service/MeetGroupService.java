@@ -1,13 +1,12 @@
 package SerengetiLionProject.demo.service;
 
 import SerengetiLionProject.demo.domain.MeetGroup;
+import SerengetiLionProject.demo.domain.MeetPersonal;
 import SerengetiLionProject.demo.repository.MeetGroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 public class MeetGroupService {
@@ -30,6 +29,26 @@ public class MeetGroupService {
         return groupRepository.findByUrl_id(url_id);
     }
 
-    public void findByTeam(Long team_id) {
+    public int[][] findTotalAvailability(MeetGroup group, List<MeetPersonal> total_personal){
+        String[] splited=group.getStart_date().split("/");
+        Integer start_date=Integer.parseInt(splited[1]);
+        splited=group.getEnd_date().split("/");
+        Integer end_date=Integer.parseInt(splited[1]);
+        Integer total_date=end_date-start_date+1;
+        Integer total_time=group.getEnd_time()-group.getStart_time()+1;
+
+        int[][] avail_array=new int[total_time][total_date];
+
+        //url_id로 해당 그룹의 모든 사람 정보 가져오는거 나중에 service로 뺴주기 (전체 가능시간: meetgroup으로, 한 사람의 가능시간: meetpersonal로)
+        for(MeetPersonal one:total_personal){
+            ArrayList<ArrayList<Integer>> avail=one.getAvailability();
+            for(int i=0;i<avail.size();i++){
+                for(int j=0;j<avail.get(i).size();j++){
+                    avail_array[i][j]+=avail.get(i).get(j);
+                }
+            }
+        }
+
+        return avail_array;
     }
 }
