@@ -16,12 +16,17 @@ import SerengetiLionProject.demo.domain.User;
 import SerengetiLionProject.demo.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -33,7 +38,6 @@ public class TeamController {
     private MeetNoteService meetNoteService;
     private TeamService teamService;
     private UserService userService;
-//    private Object model;
 
     @Autowired
     public TeamController(MeetGroupService meetGroupService, MeetPersonalService personalService, FinalScheduleService finalScheduleService, MeetNoteService meetNoteService, TeamService teamService, UserService userService) {
@@ -43,7 +47,7 @@ public class TeamController {
         this.meetNoteService = meetNoteService;
         this.teamService = teamService;
         this.userService = userService;
-//        this.model = model;
+        this.meetNoteService = meetNoteService;
     }
 
     @GetMapping("/fixed/makeTeam") // 다회성 팀 만들기 페이지
@@ -120,13 +124,14 @@ public class TeamController {
         return "redirect:/";
     }
 
-    //팀메인페이지
+
     @GetMapping ("/teampage/{teamid}")
     public String mainTeamPage(Model model, @PathVariable("teamid") String teamid){
         Long team_id = Long.parseLong(teamid);
         Team team = teamService.findTeamById(team_id);
         List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
         List<MeetNote> notes = meetNoteService.findAllByTeam_id(team_id); // 팀 회의록
+
         // 팀의 회의 일정
         for(int i=0;i<finalSchedules.size();i++){
             System.out.println("finalSchedules[i] = " + finalSchedules.get(i).getSchedule_title());
@@ -137,16 +142,42 @@ public class TeamController {
         return "thymeleaf/mainTeamPage";
     }
 
+    /**
+    //팀메인페이지
+    @GetMapping ("/teampage/{teamid}")
+    public String mainTeamPage(@PathVariable("teamid") String teamid, Model model){
+        Long team_id = Long.parseLong(teamid);
+        HashMap<String, String> write_date = new HashMap<>();
+        HashMap<String, String> note_title = new HashMap<>();
+        List<MeetNote> meetNoteList = MeetNoteService.findAllByTeam_id(team_id); // 팀 아이디에 맞는 쿼리 다 찾음
 
+        String[] teamList = user.getTeam_id().split(",");
+        for (int i = 0; i < teamList.length; i++) {
+            Long tid = Long.parseLong(teamList[i]);
+            Team team = teamService.findTeamById(tid);
+            teams.put(tid, team.getName());
+            List<FinalSchedule> scheduleList = finalScheduleService.findAllbyTeamId(tid);
+            if (scheduleList.isEmpty())
+                continue;
+            for (int j = 0; j < scheduleList.size(); j++) {
+                schedules.put(scheduleList.get(j).getSchedule_title(), scheduleList.get(j).getFinal_date());
+            }
+        }
+        model.addAttribute("teams", teams);
+        model.addAttribute("schedules", schedules);
+
+//        return "thymeleaf/makeTeam";
+        return "thymeleaf/users/mypage";
+*/
 
     //현재 팀 (team_id가 할당되어있다 가정
-    @GetMapping(value="/teampage/{teamid}/new")
+    @GetMapping(value="/teampage/new/{teamid}")
     public String createNewTeamNote(Model model, @PathVariable("teamid") String teamid){
         Long team_id=Long.parseLong(teamid);
         model.addAttribute("team_id",team_id);
         return "thymeleaf/createNewTeamNote";
     }
-    @PostMapping(value = "/teampage/newnote")
+    @PostMapping("/teampage/new")
     public String createNewTeamNoteForm(MeetTeamNewNoteForm form){
         Long team_id = form.getTeam_id();
         MeetNote meetNote=new MeetNote(form.getNote_title(),form.getNote_content(),form.getWrite_date().toString());
@@ -154,7 +185,7 @@ public class TeamController {
         meetNoteService.SaveNote(meetNote); // 저장하면 note_id 리턴
         String teamid=team_id.toString();
 
-        return "redirect:/teampage/"+teamid; //생성한 후 새롭게 만들어진 meet페이지로 넘겨줌!
+        return "redirect:/teampage/"+teamid;
     }
 
 }
