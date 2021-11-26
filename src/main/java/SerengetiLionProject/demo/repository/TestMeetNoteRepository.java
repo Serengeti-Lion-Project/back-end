@@ -28,7 +28,7 @@ public class TestMeetNoteRepository implements MeetNoteRepository {
         return note;
         }
     @Override
-    public List<MeetNote> findAllByTeam_id(Long team_id) {               // team_id에 맞는 모든 회의록 가져옴
+    public List <MeetNote> findAllByTeam_id(Long team_id) {               // team_id에 맞는 모든 회의록 가져옴
         Query query = new Query();                                       // 팀별화면 메인페이지에서 해당 팀의 모든 회의록 가져올때 사용
         query.addCriteria(Criteria.where("team_id").is(team_id));
         List<MeetNote> list = mongoTemplate.find(query,MeetNote.class);

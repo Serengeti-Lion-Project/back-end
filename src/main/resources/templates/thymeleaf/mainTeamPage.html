@@ -41,6 +41,22 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <table>
+            <thread>
+                <tr>
+                    <th>회의록</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr th:each="note : ${meetNoteList}">
+                <td th:text="${note.write_date}"></td>
+                <td th:text="${note.note_title}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div> <!-- /container -->
 </body>
 </html>
