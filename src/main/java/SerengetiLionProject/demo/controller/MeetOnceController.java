@@ -9,13 +9,12 @@ import SerengetiLionProject.demo.service.MeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,8 +80,6 @@ public class MeetOnceController {
         //form에 hidden input으로 값 넣어둔 url_id랑 title 얻어오기
         String url_id = meetOnceEntranceForm.getUrl_id();
         String title = meetOnceEntranceForm.getTitle();
-        System.out.println("url_id = " + url_id);
-        System.out.println("title = " + title);
         //url+title로 방 비밀번호 검증작업 필요!
         MeetGroup group = meetGroupService.findOne(Long.parseLong(url_id));
         if (group != null) {
@@ -97,11 +94,6 @@ public class MeetOnceController {
         MeetPersonal person = new MeetPersonal(Long.parseLong(url_id), title, meetOnceEntranceForm.getName(), meetOnceEntranceForm.getUpw());
         String val = personalService.saveNewUser(person); //여기서 중복유저 확인, 신규유저 확인합니다.
         if (val.equals("userCheckSuccess") || val.equals(person.getName())) { // 신규 등록 유저 이거나 기존 유저인 경우
-//            model.addAttribute("resultText", val);
-//            model.addAttribute("name", person.getName());
-//            // 링크 입장 후에도 사용하기 위해서 title, url_id 도 모델에 담음
-//            model.addAttribute("title", title);
-//            model.addAttribute("url_id", url_id);
             redirectAttributes.addAttribute("name", person.getName());
             return "redirect:/once/" + title + "/" + url_id + "/enter"; //입장하면 (신규유저이든 아니면 기존유저 확인이든) 보내줘야 하는 url로 다시 보내주기
         } else
@@ -117,80 +109,65 @@ public class MeetOnceController {
         MeetGroup group=meetGroupService.findOne(urlid);
         model.addAttribute("title",title);
         model.addAttribute("urlid",urlid);
+
+        //아래의 시간, 날짜 값들은 프론트에서 화면에 날짜 및 시간 표시해주기 위해 저장해주는 값
         model.addAttribute("start_date",group.getStart_date());
         model.addAttribute("end_date",group.getEnd_date());
         model.addAttribute("start_time",group.getStart_time());
         model.addAttribute("end_time",group.getEnd_time());
         model.addAttribute("name",name);
-        return "thymeleaf/onceMeetAfterEnter";
-    }
 
-    /**
-     * 그냥 일단 2차원 배열 무작정 넘겨보고 디비에 저장되는지만 확인 (2차원 배열이 어떻게 넘어오는지 모르겠어서)
-     */
-
-    @PostMapping("/once/createPersonal")
-    public String testSaveMeetPersonal(MeetOnceAvailableTimeForm form){
-        String[] splited=form.getStart_date().split("/");
+        String[] splited=group.getStart_date().split("/");
         int start_date=Integer.parseInt(splited[1]);
-        splited=form.getEnd_date().split("/");
+        splited=group.getEnd_date().split("/");
         int end_date=Integer.parseInt(splited[1]);
         int total_date=end_date-start_date+1;
-        int total_time=form.getEnd_time()-form.getStart_time()+1;
-        String title=form.getTitle();
+        int total_time=group.getEnd_time()-group.getStart_time()+1;
 
-        //원래는 프론트로 부터 전달받은 2차원 배열이 들어와야함
+        // 배열 크기 결정 위해 저장하는 값
+        model.addAttribute("total_time",total_time);
+        model.addAttribute("total_date",total_date);
+
+        List<MeetPersonal> total_personal=personalService.findAll(urlid,title);
+        model.addAttribute("headcount",total_personal.size());
+
+        //개인 가능 시간 화면에 보여주기 위해 배열로 저장
+        int[][] avail_array=meetGroupService.findTotalAvailability(group,total_personal);
+        model.addAttribute("total_availability",avail_array);
+
+        //해당 meet에 대한 전체 가능 시간 보여주기 위해 배열로 저장
+        MeetPersonal person=personalService.findOneByName(urlid,name);
+        int[][] personal_array=personalService.findOnesAvailability(person,total_time,total_date);
+        model.addAttribute("personal_availability",personal_array);
+        return "thymeleaf/selectTime";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/once/testPersonal",method=RequestMethod.POST)
+    public String getJson(MultipartHttpServletRequest req){
+        String[] splited=req.getParameter("selectedArray").split(",");
+        //사용자가 프론트에서 선택한 시간배열이 string으로 넘어옴 -> , 기준으로 잘라서 String[]에 넣어놓고
+
+        int total_time=Integer.parseInt(req.getParameter("total_time"));
+        int total_date=Integer.parseInt(req.getParameter("total_date"));
         Integer[][] availability=new Integer[total_time][total_date];
-        //일단 전체날짜*전체시간으로 2차원 배열 생성
+
+        //total_time, total_date 기준으로 잘라서 int로 변환시켜 availability 배열에 저장 (=> 개인이 선택한 가능시간)
         for(int i=0;i<total_time;i++){
             for(int j=0;j<total_date;j++){
-                availability[i][j]=(int)(Math.random()*2);  //0,1 중에 랜덤하게 값 저장
+                availability[i][j]=Integer.parseInt(splited[total_date*i+j]);  //0,1 중에 랜덤하게 값 저장
             }
         }
 
-        System.out.println("<<<<<<<<<<<Availability>>>>>>>>>>");
-        for(int i=0;i<total_time;i++){
-            for(int j=0;j<total_date;j++){
-                System.out.print(availability[i][j]+" ");
-            }
-            System.out.println();
-        }
-        Long url_id=form.getUrlid();
+        Long url_id=Long.parseLong(req.getParameter("urlid"));
 
         ArrayList<ArrayList> availabilityList=new ArrayList<>();
         for(int i=0;i<total_time;i++){
             availabilityList.add(new ArrayList<Integer> (Arrays.asList(availability[i])));
         }
+        //디비에 가능시간 업데이트
+        MeetPersonal updateRes=personalService.updatePersonalMeet(url_id,req.getParameter("name"), availabilityList);
 
-        MeetPersonal updateRes=personalService.updatePersonalMeet(url_id,form.getName(), availabilityList);
-        return "redirect:/once/"+title+"/"+url_id.toString()+"/result";  //일단은 결과화면 만들어서 거기로 redirect 인데...
-        // 결과화면에 매핑해줄 html이 없어서 다시 입장화면으로 돌아감니다
-
-    }
-
-    @GetMapping("/once/{title}/{urlid}/result")
-    public String totalResult(@PathVariable("title") String title, @PathVariable("urlid") Long urlid){
-        List<MeetPersonal> total_personal=personalService.findAll(urlid,title);
-        MeetGroup group=meetGroupService.findOne(urlid);
-
-        //아래는 total_time, total_date 찾는건데 2차원 배열을 html에서 보여주는 방법을 못찾아서 일단은 sout으로 출력하기 위해 설정
-        String[] splited=group.getStart_date().split("/");
-        Integer start_date=Integer.parseInt(splited[1]);
-        splited=group.getEnd_date().split("/");
-        Integer end_date=Integer.parseInt(splited[1]);
-        Integer total_date=end_date-start_date+1;
-        Integer total_time=group.getEnd_time()-group.getStart_time()+1;
-
-        int[][] avail_array=meetGroupService.findTotalAvailability(group,total_personal);
-
-        System.out.println("<<<<<<<<<<< total availability>>>>>>>>>");
-        for(int i=0;i<total_time;i++){
-            for(int j=0;j<total_date;j++){
-                System.out.print(avail_array[i][j]+" ");
-            }
-            System.out.println();
-        }
-        return "redirect:/once/"+title+"/"+urlid.toString();
-
+        return "success";
     }
 }

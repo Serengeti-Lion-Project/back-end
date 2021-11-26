@@ -57,4 +57,22 @@ public class MeetPersonalService {
     public MeetPersonal updatePersonalMeet(Long url_id, String name, ArrayList<ArrayList> availability){
         return personalRepository.findAndModifyByUrlIdandName(url_id,name,availability);
     }
+
+    public MeetPersonal findOneByName(Long url_id, String name){
+
+        return personalRepository.findOne(url_id,name);
+    }
+
+    public int[][] findOnesAvailability(MeetPersonal personal, int total_time, int total_date){
+        ArrayList<ArrayList<Integer>> availability=personal.getAvailability();
+        int[][] personal_array=new int[total_time][total_date];
+        if(!availability.isEmpty()) {
+            for (int i = 0; i < total_time; i++) {
+                for (int j = 0; j < total_date; j++) {
+                    personal_array[i][j] += availability.get(i).get(j);
+                }
+            }
+        }
+        return personal_array;
+    }
 }

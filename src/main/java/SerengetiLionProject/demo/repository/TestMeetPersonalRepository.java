@@ -60,24 +60,6 @@ public class TestMeetPersonalRepository implements MeetPersonalRepository {
         return person;
     }
 
-//    public TestPersonal findAndModifyByUrlIdandName(Long url_id, String name,ArrayList<Integer> mon,ArrayList<Integer> tue,ArrayList<Integer> wed,
-//                                             ArrayList<Integer> thu, ArrayList<Integer> fri,ArrayList<Integer> sat,
-//                                             ArrayList<Integer> sun){
-//        Query query=new Query();
-//        query.addCriteria(Criteria.where("url_id").is(url_id));
-//        query.addCriteria(Criteria.where("name").is(name));
-//        Update update=new Update();
-//        update.set("first",mon);
-//        update.set("second",tue);
-//        update.set("third",wed);
-//        update.set("fourth",thu);
-//        update.set("fifth",fri);
-//        update.set("sixth",sat);
-//        update.set("seventh",sun);
-//
-//        TestPersonal personal = mongoTemplate.findAndModify(query,update,TestPersonal.class);
-//        return personal;
-
 
     @Override
     public MeetPersonal findAndModifyByUrlIdandName(Long url_id, String name, ArrayList<ArrayList> availability){
@@ -89,6 +71,15 @@ public class TestMeetPersonalRepository implements MeetPersonalRepository {
 
         MeetPersonal personal=mongoTemplate.findAndModify(query,update, MeetPersonal.class);
         return personal;
+    }
+
+    @Override
+    public MeetPersonal findOne(Long url_id, String name){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("url_id").is(url_id));
+        query.addCriteria(Criteria.where("name").is(name));
+        MeetPersonal person = mongoTemplate.findOne(query, MeetPersonal.class);
+        return person;
     }
 }
 
