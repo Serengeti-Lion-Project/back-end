@@ -10,51 +10,37 @@
         <table>
             <thead>
             <tr>
-                <th>세부일정</th>
+                <th>** 확정 스케줄 이름</th>
+                <th> ** 확정 날짜</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="team : ${teams}">
-                <td th:text="${team.key}"></td>
-                <td>
-                <td th:text="${sc.key}"></td>
-                <td th:text="${sc.value}"></td>
-                </td>
+            <tr th:each="finalSchedule : ${finalSchedules}">
+                <td th:text="${finalSchedule.schedule_title}"></td>
+                <td th:text="${finalSchedule.final_date}"></td>
+                <td th:text="${finalSchedule.final_start_hour}+' :'"></td>
+                <td th:text="${finalSchedule.final_start_min}+' ~'"></td>
+                <td th:text="${finalSchedule.final_end_hour}+' :'"></td>
+                <td th:text="${finalSchedule.final_end_min}"></td>
             </tr>
             </tbody>
         </table>
-
     </div>
-
     <div>
         <table>
             <thead>
-            <tr>
-                <th>Schedule Title</th>
-                <th>Schedule Date</th>
-            </tr>
+                <tr>
+                    <th>** 회의록 이름</th>
+                    <th>** 회의록 내용</th>
+                    <th>** 회의록 회의날짜</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="sc : ${schedules}">
-                <td th:text="${sc.key}"></td>
-                <td th:text="${sc.value}"></td>
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <table>
-            <thread>
-                <tr>
-                    <th>회의록</th>
-                </tr>
-            </thread>
-            <tbody>
             <tr th:each="note : ${meetNoteList}">
-                <td th:text="${note.write_date}"></td>
                 <td th:text="${note.note_title}"></td>
-
+                <td th:text="${note.note_content}"></td>
+                <td th:text="${note.write_date}"></td>
             </tr>
             </tbody>
         </table>
