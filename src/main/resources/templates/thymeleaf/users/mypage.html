@@ -12,11 +12,13 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:each="team : ${teams}">
                 <td th:text="${team.key}"></td>
                 <td>
-                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"/>
-                        <td th:text="${team.value}"></td>
+                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
+                       th:text="${team.value}"/>
                 </td>
+            </tr>
             </tbody>
         </table>
         <a href="http://localhost:8080/fixed/makeTeam">

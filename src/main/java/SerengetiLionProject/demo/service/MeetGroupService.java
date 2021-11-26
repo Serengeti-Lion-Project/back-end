@@ -39,6 +39,8 @@ public class MeetGroupService {
 
         int[][] avail_array=new int[total_time][total_date];
 
+        if(total_personal.isEmpty())
+            return avail_array;
         //url_id로 해당 그룹의 모든 사람 정보 가져오는거 나중에 service로 뺴주기 (전체 가능시간: meetgroup으로, 한 사람의 가능시간: meetpersonal로)
         for(MeetPersonal one:total_personal){
             ArrayList<ArrayList<Integer>> avail=one.getAvailability();

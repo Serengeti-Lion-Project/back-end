@@ -1,0 +1,58 @@
+.inner {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.timeBox {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}
+
+.leftColorInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}
+
+.colorInfoBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.colorChart {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.leftTimeBox {
+    margin-right:100px;
+
+}
+
+.rightTimeBox {
+    margin-left:100px;
+
+}
+
+table {
+    border-spacing: 0px;
+}
+
+.leftTimeHeader {
+    height:100px;
+    text-align: center;
+}
+
+.rightTimeHeader {
+    height:100px;
+    text-align: center;
+}
