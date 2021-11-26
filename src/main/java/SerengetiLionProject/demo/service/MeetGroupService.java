@@ -29,4 +29,7 @@ public class MeetGroupService {
     public MeetGroup findOne(Long url_id){
         return groupRepository.findByUrl_id(url_id);
     }
+
+    public void findByTeam(Long team_id) {
+    }
 }

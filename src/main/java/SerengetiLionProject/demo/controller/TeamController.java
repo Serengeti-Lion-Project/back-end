@@ -124,7 +124,7 @@ public class TeamController {
     public String mainTeamPage(Model model, @PathVariable("teamid") String teamid){
         Long team_id = Long.parseLong(teamid);
         Team team = teamService.findTeamById(team_id);
-//        meetGroupService.findByTeam(team_id);
+        meetGroupService.findByTeam(team_id);
         // 팀의 회의 일정
 //        model.addAttribute("meets",);
         // 팀의 회의록
