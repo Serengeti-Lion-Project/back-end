@@ -15,4 +15,5 @@ public interface MeetPersonalRepository {
     MeetPersonal checkPwd(String upw, String name, Long url_id, String title);
     MeetPersonal findAndModifyByUrlIdandName(Long url_id, String name, ArrayList<ArrayList> availability);
 //    List<TestMeetPersonal> findAll();
+    MeetPersonal findOne(Long url_id, String name);
 }
