@@ -132,10 +132,7 @@ public class TeamController {
         List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
         List<MeetNote> notes = meetNoteService.findAllByTeam_id(team_id); // 팀 회의록
 
-        // 팀의 회의 일정
-        for(int i=0;i<finalSchedules.size();i++){
-            System.out.println("finalSchedules[i] = " + finalSchedules.get(i).getSchedule_title());
-        }
+        // 팀의 최종 스케줄        
         model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록
         model.addAttribute("notes",notes);
