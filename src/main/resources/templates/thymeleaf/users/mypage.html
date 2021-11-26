@@ -3,6 +3,7 @@
 <body>
 <div class="container">
     <div>
+
         <table>
             <thead>
             <tr>
@@ -11,14 +12,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="team : ${teams}">
-                <!--        ${} : 모델 안에 있는 값을 꺼내는 것 -->
                 <td th:text="${team.key}"></td>
-                <td th:text="${team.value}"></td>
-
-            </tr>
+                <td>
+                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"/>
+                        <td th:text="${team.value}"></td>
+                </td>
             </tbody>
         </table>
+        <a href="http://localhost:8080/fixed/makeTeam">
+            <div class="buttonBox">
+                팀추가
+            </div>
+        </a>
     </div>
 
     <div>

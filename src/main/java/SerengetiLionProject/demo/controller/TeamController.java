@@ -86,7 +86,7 @@ public class TeamController {
     public String createNewTeamMeet(Model model, @PathVariable("teamid") String teamid){
         Long team_id=Long.parseLong(teamid);
         model.addAttribute("team_id",team_id);
-        return "createFixedMeetForm";
+        return "thymeleaf/createFixedMeetForm";
     }
 
     // "createFixedMeetForm" 에서 작성한 폼 (새로운 팀용 meet에 대한 정보): 여기로 넘어옴
@@ -110,7 +110,7 @@ public class TeamController {
         Long team_id=group.getTeam_id();
         model.addAttribute("teamid",team_id);
         model.addAttribute("title",title); //확정날짜 저장할 때 team_id랑 제목 저장해야하니까 jsp로 넘겨서 같이 저장 -> 받아오기
-        return "saveFinalScheduleForm";
+        return "thymeleaf/saveFinalScheduleForm";
     }
 
     @PostMapping("/team/confirmMeetDate")
@@ -119,20 +119,26 @@ public class TeamController {
         FinalSchedule date=new FinalSchedule(form.getTeam_id(),form.getTitle(),form.getFinal_date(),form.getStart_hour(),form.getStart_min()
         ,form.getEnd_hour(),form.getEnd_min());
         finalScheduleService.saveFinalSchedule(date);
+        System.out.println("form.getTitle() = " + form.getTitle());
         return "redirect:/";
     }
+
 
     @GetMapping ("/teampage/{teamid}")
     public String mainTeamPage(Model model, @PathVariable("teamid") String teamid){
         Long team_id = Long.parseLong(teamid);
         Team team = teamService.findTeamById(team_id);
+
 //        meetGroupService.findByTeam(team_id);
         // 팀의 회의 일정
 //        model.addAttribute("meets",);
         // 팀의 회의록
-//        model.addAttribute("notes",);
 
-        return "thymeleaf/firstPage";
+        List<MeetNote> meetNoteList = meetNoteService.findAllByTeam_id(team_id); // 팀 아이디에 맞는 쿼리 다 찾음
+        model.addAttribute("meetNoteList",meetNoteList);
+
+
+        return "thymeleaf/mainTeamPage";
     }
 
     /**
@@ -161,15 +167,14 @@ public class TeamController {
 
 //        return "thymeleaf/makeTeam";
         return "thymeleaf/users/mypage";
+*/
 
-
-    }*/
     //현재 팀 (team_id가 할당되어있다 가정
     @GetMapping(value="/teampage/new/{teamid}")
     public String createNewTeamNote(Model model, @PathVariable("teamid") String teamid){
         Long team_id=Long.parseLong(teamid);
         model.addAttribute("team_id",team_id);
-        return "createNewTeamNote";
+        return "thymeleaf/createNewTeamNote";
     }
     @PostMapping("/teampage/new")
     public String createNewTeamNoteForm(MeetTeamNewNoteForm form){

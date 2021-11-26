@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지_팀별화면</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>팀일정</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <td th:text="${team.final_date}"></td>
+
+            </a>
+            </td>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>Schedule Title</th>
+                <th>Schedule Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sc : ${schedules}">
+                <td th:text="${sc.key}"></td>
+                <td th:text="${sc.value}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table>
+            <thread>
+                <tr>
+                    <th>회의록</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr th:each="note : ${meetNoteList}">
+                <td th:text="${note.write_date}"></td>
+                <td th:text="${note.note_title}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
