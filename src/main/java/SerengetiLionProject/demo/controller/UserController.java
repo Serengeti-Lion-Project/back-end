@@ -71,6 +71,7 @@ public class UserController {
 
     @GetMapping("/mypage/{uid}")
     public String myPage(@PathVariable("uid") String uid, Model model) {
+        System.out.println("uid = " + uid);
         Long id = Long.parseLong(uid);
         HashMap<Long, String> teams = new HashMap<>();
         HashMap<String, String> schedules = new HashMap<>();

@@ -10,15 +10,17 @@
         <table>
             <thead>
             <tr>
-                <th>팀일정</th>
-                <th></th>
+                <th>세부일정</th>
             </tr>
             </thead>
             <tbody>
-            <td th:text="${team.final_date}"></td>
-
-            </a>
-            </td>
+            <tr th:each="team : ${teams}">
+                <td th:text="${team.key}"></td>
+                <td>
+                <td th:text="${sc.key}"></td>
+                <td th:text="${sc.value}"></td>
+                </td>
+            </tr>
             </tbody>
         </table>
 
