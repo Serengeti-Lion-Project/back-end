@@ -1,17 +1,11 @@
 package SerengetiLionProject.demo.controller;
 
-import SerengetiLionProject.demo.domain.AvailableTime;
-import SerengetiLionProject.demo.domain.MeetGroup;
-import SerengetiLionProject.demo.domain.MeetPersonal;
-import SerengetiLionProject.demo.domain.TestPersonal;
+import SerengetiLionProject.demo.domain.*;
 import SerengetiLionProject.demo.dto.MeetOnceAvailableTimeForm;
 import SerengetiLionProject.demo.dto.MeetOnceNewGroupForm;
 import SerengetiLionProject.demo.dto.MeetOnceEntranceForm;
-import SerengetiLionProject.demo.service.AvailableTimeService;
 import SerengetiLionProject.demo.service.MeetGroupService;
-import SerengetiLionProject.demo.service.NewTestPersonalService;
-import SerengetiLionProject.demo.service.TestMeetPersonalService;
-import org.aspectj.weaver.ast.Test;
+import SerengetiLionProject.demo.service.MeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,18 +18,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class MeetOnceController {
     private MeetGroupService meetGroupService;
-    private NewTestPersonalService personalService;
-    private AvailableTimeService availableTimeService;
+    private MeetPersonalService personalService;
 
     @Autowired  //생성자 위에 Autowired 있으면 스프링 컨테이너에 있는 OnceMemberService 와 연결시킴 (의존관계 주입)
-    public MeetOnceController(MeetGroupService meetGroupService, NewTestPersonalService personalService, AvailableTimeService availableTimeService) {
+    public MeetOnceController(MeetGroupService meetGroupService, MeetPersonalService personalService) {
         this.meetGroupService = meetGroupService;
         this.personalService = personalService;
-        this.availableTimeService = availableTimeService;
     }
 
     @GetMapping("/") // 첫 페이지
@@ -101,7 +94,7 @@ public class MeetOnceController {
             return "redirect:/once";
         }
 
-        TestPersonal person = new TestPersonal(Long.parseLong(url_id), title, meetOnceEntranceForm.getName(), meetOnceEntranceForm.getUpw());
+        MeetPersonal person = new MeetPersonal(Long.parseLong(url_id), title, meetOnceEntranceForm.getName(), meetOnceEntranceForm.getUpw());
         String val = personalService.saveNewUser(person); //여기서 중복유저 확인, 신규유저 확인합니다.
         if (val.equals("userCheckSuccess") || val.equals(person.getName())) { // 신규 등록 유저 이거나 기존 유저인 경우
 //            model.addAttribute("resultText", val);
@@ -139,69 +132,65 @@ public class MeetOnceController {
     @PostMapping("/once/createPersonal")
     public String testSaveMeetPersonal(MeetOnceAvailableTimeForm form){
         String[] splited=form.getStart_date().split("/");
-        Integer start_date=Integer.parseInt(splited[1]);
+        int start_date=Integer.parseInt(splited[1]);
         splited=form.getEnd_date().split("/");
-        Integer end_date=Integer.parseInt(splited[1]);
-        Integer total_date=end_date-start_date+1;
-        Integer total_time=form.getEnd_time()-form.getStart_time()+1;
+        int end_date=Integer.parseInt(splited[1]);
+        int total_date=end_date-start_date+1;
+        int total_time=form.getEnd_time()-form.getStart_time()+1;
         String title=form.getTitle();
 
-        //mon,tue ... 이런식이 아니라 그냥 first, second 이렇게 seventh까지 만들어서 first==start_date, end_date이후의 값들은 null로
-        Integer[][] availability=new Integer[total_date][total_time];
+        //원래는 프론트로 부터 전달받은 2차원 배열이 들어와야함
+        Integer[][] availability=new Integer[total_time][total_date];
         //일단 전체날짜*전체시간으로 2차원 배열 생성
-        for(int i=0;i<total_date;i++){
-            for(int j=0;j<total_time;j++){
+        for(int i=0;i<total_time;i++){
+            for(int j=0;j<total_date;j++){
                 availability[i][j]=(int)(Math.random()*2);  //0,1 중에 랜덤하게 값 저장
             }
         }
 
         System.out.println("<<<<<<<<<<<Availability>>>>>>>>>>");
-        for(int i=0;i<total_date;i++){
-            for(int j=0;j<total_time;j++){
+        for(int i=0;i<total_time;i++){
+            for(int j=0;j<total_date;j++){
                 System.out.print(availability[i][j]+" ");
             }
             System.out.println();
         }
         Long url_id=form.getUrlid();
 
-        //.........arraylist 생성....
-        ArrayList<Integer> first=null;
-        ArrayList<Integer> second=null;
-        ArrayList<Integer> third=null;
-        ArrayList<Integer> fourth=null;
-        ArrayList<Integer> fifth=null;
-        ArrayList<Integer> sixth=null;
-        ArrayList<Integer> seventh=null;  //총 선택가능 날짜가 5일이라면? -> sixth랑 seventh는 null
-
-        //한숨만 나오는 노가다 코드..... 원래 String.valueOf(1) 이런식으로 해서 제목이 1이면->availability[1] 저장 이렇게 하고 싶었는데,,, 안되더라구요 좋은 방법을 아신다면 연락주세요...
-        for(int i=0;i<total_date;i++){
-            switch (i) {
-                case 0:
-                    first = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 1:
-                    second = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 2:
-                    third = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 3:
-                    fourth = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 4:
-                    fifth = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 5:
-                    sixth = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-                case 6:
-                    seventh = new ArrayList<Integer>(Arrays.asList(availability[i]));
-                    break;
-            }
+        ArrayList<ArrayList> availabilityList=new ArrayList<>();
+        for(int i=0;i<total_time;i++){
+            availabilityList.add(new ArrayList<Integer> (Arrays.asList(availability[i])));
         }
 
-        TestPersonal updateRes=personalService.updatePersonalMeet(url_id,form.getName(),first,second,third,fourth,fifth,sixth,seventh);
-        return "redirect:/once/"+title+"/"+url_id.toString();  //일단은 그냥 입장화면으로 redirect했는데 나중에 결과 다 불러오는 페이지 추가할 예정
+        MeetPersonal updateRes=personalService.updatePersonalMeet(url_id,form.getName(), availabilityList);
+        return "redirect:/once/"+title+"/"+url_id.toString()+"/result";  //일단은 결과화면 만들어서 거기로 redirect 인데...
+        // 결과화면에 매핑해줄 html이 없어서 다시 입장화면으로 돌아감니다
+
+    }
+
+    @GetMapping("/once/{title}/{urlid}/result")
+    public String totalResult(@PathVariable("title") String title, @PathVariable("urlid") Long urlid){
+        List<MeetPersonal> total_personal=personalService.findAll(urlid,title);
+        MeetGroup group=meetGroupService.findOne(urlid);
+
+        //아래는 total_time, total_date 찾는건데 2차원 배열을 html에서 보여주는 방법을 못찾아서 일단은 sout으로 출력하기 위해 설정
+        String[] splited=group.getStart_date().split("/");
+        Integer start_date=Integer.parseInt(splited[1]);
+        splited=group.getEnd_date().split("/");
+        Integer end_date=Integer.parseInt(splited[1]);
+        Integer total_date=end_date-start_date+1;
+        Integer total_time=group.getEnd_time()-group.getStart_time()+1;
+
+        int[][] avail_array=meetGroupService.findTotalAvailability(group,total_personal);
+
+        System.out.println("<<<<<<<<<<< total availability>>>>>>>>>");
+        for(int i=0;i<total_time;i++){
+            for(int j=0;j<total_date;j++){
+                System.out.print(avail_array[i][j]+" ");
+            }
+            System.out.println();
+        }
+        return "redirect:/once/"+title+"/"+urlid.toString();
 
     }
 }

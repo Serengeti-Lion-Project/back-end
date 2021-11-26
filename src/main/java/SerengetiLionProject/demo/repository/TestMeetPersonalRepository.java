@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 // when2meet 개인
+@Repository
 public class TestMeetPersonalRepository implements MeetPersonalRepository {
 
     @Autowired
@@ -54,6 +58,37 @@ public class TestMeetPersonalRepository implements MeetPersonalRepository {
                 .addCriteria(Criteria.where("upw").is(upw));
         MeetPersonal person = mongoTemplate.findOne(query, MeetPersonal.class);
         return person;
+    }
+
+//    public TestPersonal findAndModifyByUrlIdandName(Long url_id, String name,ArrayList<Integer> mon,ArrayList<Integer> tue,ArrayList<Integer> wed,
+//                                             ArrayList<Integer> thu, ArrayList<Integer> fri,ArrayList<Integer> sat,
+//                                             ArrayList<Integer> sun){
+//        Query query=new Query();
+//        query.addCriteria(Criteria.where("url_id").is(url_id));
+//        query.addCriteria(Criteria.where("name").is(name));
+//        Update update=new Update();
+//        update.set("first",mon);
+//        update.set("second",tue);
+//        update.set("third",wed);
+//        update.set("fourth",thu);
+//        update.set("fifth",fri);
+//        update.set("sixth",sat);
+//        update.set("seventh",sun);
+//
+//        TestPersonal personal = mongoTemplate.findAndModify(query,update,TestPersonal.class);
+//        return personal;
+
+
+    @Override
+    public MeetPersonal findAndModifyByUrlIdandName(Long url_id, String name, ArrayList<ArrayList> availability){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("url_id").is(url_id));
+        query.addCriteria(Criteria.where("name").is(name));
+        Update update=new Update();
+        update.set("availability",availability);
+
+        MeetPersonal personal=mongoTemplate.findAndModify(query,update, MeetPersonal.class);
+        return personal;
     }
 }
 
