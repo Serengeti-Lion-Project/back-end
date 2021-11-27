@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="css/makeOne.css" />
+  <link rel="stylesheet" href="/css/makeOne.css" />
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
@@ -55,10 +55,10 @@
     </script>
 </head>
 <body>
-<form action="/once" method="post">
+<form action="/fixed/newmeet" method="post">
   <div class="inner">
     <div class="logoBox">
-      <img src="img/logoImage.png" class="logoImage" >
+      <img src="/img/logoImage.png" class="logoImage" >
       <p style="font-size: 40px;">우리 대체 언제 만나 ?</p>
     </div>
     <form>
@@ -81,7 +81,7 @@
 
         <div class="rightBox">
           <div class="startTime">
-            <img src="img/timeIcon.png" class="selectIcon">
+            <img src="/img/timeIcon.png" class="selectIcon">
             <select id="startTimeSelect" name="start_time">
               <option value="0" selected>12:00 AM</option>
               <option value="1">1:00 AM</option>
@@ -111,7 +111,7 @@
             <p>시까지</p>
           </div>
           <div class="endTime">
-            <img src="img/timeIcon.png" class="selectIcon">
+            <img src="/img/timeIcon.png" class="selectIcon">
             <select id="endTimeSelect" name="end_time">
 
               <option value="1" selected>1:00 AM</option>
@@ -141,6 +141,7 @@
             </select>
             <p>시까지</p>
           </div>
+          <input type="hidden" name="team_id" th:value="${team_id}">
           <div class="makeButton">
             <input type="submit" id="makeBtn" value="            시작하기">
           </div>

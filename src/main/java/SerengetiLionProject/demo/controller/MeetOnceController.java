@@ -112,17 +112,13 @@ public class MeetOnceController {
 
         //아래의 시간, 날짜 값들은 프론트에서 화면에 날짜 및 시간 표시해주기 위해 저장해주는 값
         model.addAttribute("start_date",group.getStart_date());
-        model.addAttribute("end_date",group.getEnd_date());
         model.addAttribute("start_time",group.getStart_time());
-        model.addAttribute("end_time",group.getEnd_time());
         model.addAttribute("name",name);
+        model.addAttribute("isLeader",0);
 
-        String[] splited=group.getStart_date().split("/");
-        int start_date=Integer.parseInt(splited[1]);
-        splited=group.getEnd_date().split("/");
-        int end_date=Integer.parseInt(splited[1]);
-        int total_date=end_date-start_date+1;
-        int total_time=group.getEnd_time()-group.getStart_time()+1;
+        int[] calcRes= meetGroupService.calcTotalTimeandDate(group);
+        int total_date=calcRes[0];
+        int total_time=calcRes[1];
 
         // 배열 크기 결정 위해 저장하는 값
         model.addAttribute("total_time",total_time);
@@ -131,11 +127,11 @@ public class MeetOnceController {
         List<MeetPersonal> total_personal=personalService.findAll(urlid,title);
         model.addAttribute("headcount",total_personal.size());
 
-        //개인 가능 시간 화면에 보여주기 위해 배열로 저장
+        //해당 meet에 대한 전체 가능 시간 보여주기 위해 배열로 저장
         int[][] avail_array=meetGroupService.findTotalAvailability(group,total_personal);
         model.addAttribute("total_availability",avail_array);
 
-        //해당 meet에 대한 전체 가능 시간 보여주기 위해 배열로 저장
+        //개인 가능 시간 화면에 보여주기 위해 배열로 저장
         MeetPersonal person=personalService.findOneByName(urlid,name);
         int[][] personal_array=personalService.findOnesAvailability(person,total_time,total_date);
         model.addAttribute("personal_availability",personal_array);
