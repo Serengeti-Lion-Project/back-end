@@ -85,6 +85,7 @@ public class MeetOnceController {
         if (group != null) {
             String page_pw = group.getPage_pw();
             if (!meetOnceEntranceForm.getPage_pw().equals(page_pw)) {
+                model.addAttribute("title", title);
                 return "redirect:/once/" + title + "/" + url_id;
             }
         } else {

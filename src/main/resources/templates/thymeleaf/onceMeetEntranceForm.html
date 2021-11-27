@@ -1,34 +1,78 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" >-->
+<!--<head>-->
+<!--    <meta charset='utf-8'>-->
+<!--    <title>일회성_메인페이지_초대된사람_입장전</title>-->
+<!--    <meta name='viewport' content='width=device-width, initial-scale=1'>-->
+<!--    <link rel='stylesheet' type='text/css' href='entrance.css'>-->
+<!--    &lt;!&ndash; <script src='entrance.js'></script> &ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+
+<!--    <form action="/once/new/createUser" method="post">-->
+<!--        <div class="form-group">-->
+<!--            <label for="page_pw">방 비밀번호</label>-->
+<!--            <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="name">이름</label>-->
+<!--            &lt;!&ndash;      dto 에서 받을 변수명과 동일하게 name 값 지정&ndash;&gt;-->
+<!--            <input type="text" id="name" name="name" placeholder="이름을-->
+<!--입력하세요">-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="upw">비밀번호</label>-->
+<!--            &lt;!&ndash;      dto 에서 받을 변수명과 동일하게 name 값 지정&ndash;&gt;-->
+<!--            <input type="password" id="upw" name="upw" placeholder="비밀번호를-->
+<!--입력하세요">-->
+<!--        </div>-->
+<!--        <input type="hidden" id="url_id" name="url_id" th:value="${urlid}">-->
+<!--        <input type="hidden" id="title" name="title" th:value="${title}">-->
+<!--        &lt;!&ndash; model에서 보낸 title, urlid 출력&ndash;&gt;-->
+<!--    </form>-->
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>일회성 입장전</title>
+    <meta charset='utf-8'>
+    <title>일회성_메인페이지_초대된사람_입장전</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' href='/css/entrance.css'>
+    <!-- <script src='entrance.js'></script> -->
 </head>
 <body>
-<div class="container">
+<div class="inner">
+
+    <div class="title">
+        <h1 th:text="${title}"></h1>
+    </div>
 
     <form action="/once/new/createUser" method="post">
         <div class="form-group">
-            <label for="page_pw">방 비밀번호</label>
-            <input type="password" id="page_pw" name="page_pw" placeholder="방 비밀번호를 입력하세요">
-        </div>
-        <div class="form-group">
-            <label for="name">이름</label>
-            <!--      dto 에서 받을 변수명과 동일하게 name 값 지정-->
-            <input type="text" id="name" name="name" placeholder="이름을
-입력하세요">
-        </div>
-        <div class="form-group">
-            <label for="upw">비밀번호</label>
-            <!--      dto 에서 받을 변수명과 동일하게 name 값 지정-->
-            <input type="password" id="upw" name="upw" placeholder="비밀번호를
-입력하세요">
+            <div class="miniFormBox">
+                <label for="page_pw">방 비밀번호 : </label>
+                <input type="text" id="page_pw" name="page_pw" required>
+            </div>
+            <div class="miniFormBox">
+                <label for="name">이                 름 : </label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="miniFormBox">
+                <label for="upw">패 스 워 드 : </label>
+                <input type="password" id="upw" name="upw" required>
+            </div>
+
         </div>
         <input type="hidden" id="url_id" name="url_id" th:value="${urlid}">
         <input type="hidden" id="title" name="title" th:value="${title}">
-        <!-- model에서 보낸 title, urlid 출력-->
-        <button type="submit">입장하기</button>
+        <div class = "entrance-button">
+            <button type="submit">입장하기</button>
+        </div>
     </form>
-</div> <!-- /container -->
+</div>
+
 </body>
-</html>

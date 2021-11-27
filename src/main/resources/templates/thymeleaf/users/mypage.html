@@ -1,51 +1,147 @@
-<!DOCTYPE HTML>
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <div>-->
+
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>team ID</th>-->
+<!--                <th>team name</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="team : ${teams}">-->
+<!--                <td th:text="${team.key}"></td>-->
+<!--                <td>-->
+<!--                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"-->
+<!--                       th:text="${team.value}"/>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--        <a href="http://localhost:8080/fixed/makeTeam">-->
+<!--            <div class="buttonBox">-->
+<!--                팀추가-->
+<!--            </div>-->
+<!--        </a>-->
+<!--    </div>-->
+
+<!--    <div>-->
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>Schedule Title</th>-->
+<!--                <th>Schedule Date</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="sc : ${schedules}">-->
+<!--                &lt;!&ndash;        ${} : 모델 안에 있는 값을 꺼내는 것 &ndash;&gt;-->
+<!--                <td th:text="${sc.key}"></td>-->
+<!--                <td th:text="${sc.value}"></td>-->
+
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <style>
+        .inner {
+            display: flex;
+            flex-direction: column;
+            justify-content: baseline;
+            align-items: center;
+        }
+        .topBox {
+            display: flex;
+            flex-direction: row;
+            justify-content: baseline;
+            align-items: center;
+        }
+    </style>
+
+    <link rel='stylesheet' type='text/css' href='/css/teampage.css'>
+    <link rel='stylesheet' type='text/css' href='/css/calendar.css'>
+
+    <script type = "text/javascript" src='/js/calendar.js'></script>
+
+</head>
 <body>
-<div class="container">
-    <div>
+<div class="inner">
+    <div class="topBox" style = "margin-bottom: 100px">
+        <div class="calendarBox" style="margin-left: 100px">
+            <div class = "right" style = "width : 497px;">
 
-        <table>
-            <thead>
-            <tr>
-                <th>team ID</th>
-                <th>team name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="team : ${teams}">
-                <td th:text="${team.key}"></td>
-                <td>
-                    <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
-                       th:text="${team.value}"/>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <a href="http://localhost:8080/fixed/makeTeam">
-            <div class="buttonBox">
-                팀추가
+                <h2>팀 목록</h2>
+
+                <table>
+                    <tbody>
+                    <tr th:each="team : ${teams}">
+                        <td>
+                            <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
+                               th:text="${team.value}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="http://localhost:8080/fixed/makeTeam">
+                    <div class="buttonBox">
+                        팀추가
+                    </div>
+                </a>
             </div>
-        </a>
+        </div>
+
+        <div class style="width: 150px;"></div>
+        <div class="detailSchedule">
+
+            <div class = "left" style = "width : 600px;">
+                <h2>내 일정</h2>
+
+                <div class="calendar" style = "margin : 0 ;text-align: center; justify-content: center">
+                    <div class="header">
+                        <div class="year-month" id = "year-month"></div>
+                        <div class="nav">
+                            <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+                            <button class="nav-btn go-today" onclick="goToday()">Today</button>
+                            <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="days">
+                            <div class="day">일</div>
+                            <div class="day">월</div>
+                            <div class="day">화</div>
+                            <div class="day">수</div>
+                            <div class="day">목</div>
+                            <div class="day">금</div>
+                            <div class="day">토</div>
+                        </div>
+                        <div class="dates" id = "dates"></div>
+                    </div>
+                </div>
+
+                <script type = "text/javascript" src='/js/calendar.js'></script>
+            </div>
+
+        </div>
     </div>
 
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>Schedule Title</th>
-                <th>Schedule Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="sc : ${schedules}">
-                <!--        ${} : 모델 안에 있는 값을 꺼내는 것 -->
-                <td th:text="${sc.key}"></td>
-                <td th:text="${sc.value}"></td>
+</div>
 
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div> <!-- /container -->
 </body>
 </html>
