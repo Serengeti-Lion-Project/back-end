@@ -177,6 +177,8 @@ public class TeamController {
         List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
         List<MeetNote> notes = meetNoteService.findAllByTeam_id(team_id); // 팀 회의록
 
+        // 팀 전체
+        model.addAttribute("team", team);
         // 팀의 최종 스케줄        
         model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록

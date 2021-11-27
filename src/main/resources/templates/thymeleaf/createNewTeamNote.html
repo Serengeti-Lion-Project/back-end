@@ -1,21 +1,56 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" >-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>회의록 추가하기</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h3>회의록 추가하기</h3>-->
+<!--<form action="/teampage/new" method="post">-->
+<!--    <input id = "note_title" name ="note_title" type="text" placeholder="제목을 입력하세요"> <br>-->
+<!--    글내용 : <input id = "note_content" name ="note_content" type="text"> <br>-->
+<!--    작성날짜 : <input type="date" id="write_date" name="write_date" > <br>-->
+<!--    <p>작성날짜는 프론트에서 알아서 처리해줄거니까 일단 직접 입력하는거로 </p>-->
+<!--    <input type="submit" value = "Save">-->
+
+<!--    <input type="hidden" id="team_id" name="team_id" th:value="${team_id}">-->
+
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회의록 추가하기</title>
+
+    <link rel="stylesheet" href="/css/paper.css" />
 </head>
 <body>
-<h3>회의록 추가하기</h3>
-<form action="/teampage/new" method="post">
-    <input id = "note_title" name ="note_title" type="text" placeholder="제목을 입력하세요"> <br>
-    글내용 : <input id = "note_content" name ="note_content" type="text"> <br>
-    작성날짜 : <input type="date" id="write_date" name="write_date" > <br>
-    <p>작성날짜는 프론트에서 알아서 처리해줄거니까 일단 직접 입력하는거로 </p>
-    <input type="submit" value = "Save">
+<div class="inner">
+    <div class="menuTitleBox">
+        <img src="/img/paperIcon.png" class="paperIcon">
+        <h2 class="menuTitle">회의록 추가하기</h2>
+    </div>
+    <form action="/teampage/new" method="post">
+        <div class="writeTitleBox" >
+            <input id = "note_title" name ="note_title" type="text" class="writeTitleInput">
+        </div>
+        <div class="writeContentBox">
+                <textarea>
 
-    <input type="hidden" id="team_id" name="team_id" th:value="${team_id}">
+                </textarea>
+            <input id = "note_content" name ="note_content" type="text">
+        </div>
+        <input type="submit" value="Save" id="submitButton">
+        <input type="hidden" id="team_id" name="team_id" th:value="${team_id}">
 
-</form>
+    </form>
+
+</div>
 
 </body>
 </html>
