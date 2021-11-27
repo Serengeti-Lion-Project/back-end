@@ -94,31 +94,11 @@
 
     /*]]>*/
     </script>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-    function clip() {
-
-    var url = '';
-    var title=/*[[${title}]]*/
-    var urlid=/*[[${urlid}]]*/
-    var textarea = document.createElement("textarea");
-    document.body.appendChild(textarea);
-    url = "http://localhost:8080/once/"+title+"/"+urlid;
-    textarea.value = url;
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-    alert("URL이 복사되었습니다.")
-    }
-    /*]]>*/
-    </script>
-
 </head>
 <body>
 <div class="inner">
-    <div class="titleBox" style="display: flex; flex-direction: column;text-align: center;">
-        <h1><td th:text="${title}"/>
-            <span class="button gray medium" style="margin-left:700px"><a href="#" onclick="clip(); return false;" style="text-decoration: none; color:inherit; border:solid 2px #c4c4c4; border-radius: 20px; padding:5px;">URL주소복사</a></span>
+    <div class="titleBox">
+        <h1><td th:text="${title}"/></h1>
     </div>
 
     <div class="timeBox">
@@ -340,6 +320,7 @@
                 </script>
         </div>
     </div>
+
     <button type="submit" id="submit-test">선택완료</button>
     <script type="text/javascript" th:inline="javascript">
                           /*<![CDATA[*/
@@ -355,12 +336,70 @@
                                    method:'POST',
                                    body:formData,
                                    redirect:'follow'
-                                   }).then(response=>window.location.href = "http://localhost:8080/once/"+title+"/"+urlid+"/enter?name="+name);
+                                   }).then(response=>window.location.href = "http://localhost:8080/fixed/"+title+"/"+urlid);
                            });
                            /*]]>*/
     </script>
 
+    <div id="onlyLeader" style="display:flex; flex-direction: row; margin-top:20px">
+        <form action='/team/confirmMeetDate' method='POST' style='display:flex; flex-direction: row;'>
+            <div>
+                <label for='dateConfirm'>날짜</label>
+                <select name='final_date' id='dateConfirm' style='margin-right:10px;'></select>
+                <label for='timeStartConfirm'>시작시간</label>
+                <select name='start_hour' id='timeStartConfirm'></select>
+                <label for='timeStartConfirmMinute'>:</label>
+                <select name='start_min' id='timeStartConfirmMinute' style='margin-right:10px;'></select>
+                <label for='timeEndConfirm'>끝나는시간</label><select name='end_hour' id='timeEndConfirm'></select>
+                <label for='timeEndConfirmMinute'>:</label><select name='end_min' id='timeEndConfirmMinute' style='margin-right:10px;'></select>
+            </div><div><input type='submit' value='확정하기' id='confirmButton'></div>
+            <input type="hidden" name="title" th:value="${title}">
+            <input type="hidden" name="team_id" th:value="${teamid}">
+        </form>
+
+    </div>
+    <script type="text/javascript">
+        if(teamLeader==0){
+        document.getElementById("onlyLeader").style.display = "none";
+        }
+        else{
+           document.getElementById("onlyLeader").style.display = "flex";
+           }
+    </script>
+
 </div>
+<script type="text/javascript">
+        for (var i = 0; i < confirmDates.length - 1; i++) {
+            var dateConfirmOps = document.createElement('option');
+            dateConfirmOps.innerHTML = confirmDates[i];
+            dateConfirmOps.value = confirmDates[i];
+            document.getElementById('dateConfirm').appendChild(dateConfirmOps);
+        }
+        for (var i = 0; i < times.length; i++) {
+            var dateConfirmOps = document.createElement('option');
+            dateConfirmOps.innerHTML = times[i];
+            dateConfirmOps.value = times[i];
+            document.getElementById('timeStartConfirm').appendChild(dateConfirmOps);
+        }
+        for (var i = 0; i < 61; i++) {
+            var dateConfirmOps = document.createElement('option');
+            dateConfirmOps.innerHTML = i;;
+            dateConfirmOps.value = i;
+            document.getElementById('timeStartConfirmMinute').appendChild(dateConfirmOps);
+        }
+        for (var i = 0; i < times.length; i++) {
+            var dateConfirmOps = document.createElement('option');
+            dateConfirmOps.innerHTML = times[i];
+            dateConfirmOps.value = times[i];
+            document.getElementById('timeEndConfirm').appendChild(dateConfirmOps);
+        }
+        for (var i = 0; i < 61; i++) {
+            var dateConfirmOps = document.createElement('option');
+            dateConfirmOps.innerHTML = i;
+            dateConfirmOps.value = i;
+            document.getElementById('timeEndConfirmMinute').appendChild(dateConfirmOps);
+        }
+    </script>
 
     <form id="testForm">
         <input type="hidden" name="total_date" th:value="${total_date}">

@@ -5,6 +5,7 @@
     align-items: center;
 }
 
+
 .timeBox {
     display: flex;
     flex-direction: row;
@@ -55,4 +56,29 @@ table {
 .rightTimeHeader {
     height:100px;
     text-align: center;
+}
+
+#confirmButton {
+    background-color: #A0CD63;
+    color:white;
+    border-radius: 10px;
+    width:100px;
+    height:40px;
+    outline:none;
+    border:none;
+    font-size: 20px;
+    margin-top:-10px;
+    cursor:pointer;
+}
+
+#submit-test {
+    background-color: #A0CD63;
+    color:white;
+    border-radius: 10px;
+    width:80px;
+    height:30px;
+    outline:none;
+    border:none;
+    font-size: 15px;
+    cursor:pointer;
 }

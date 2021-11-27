@@ -53,4 +53,15 @@ public class MeetGroupService {
 
         return avail_array;
     }
+
+    public int[] calcTotalTimeandDate(MeetGroup group){
+        String[] splited=group.getStart_date().split("/");
+        int start_date=Integer.parseInt(splited[1]);
+        splited=group.getEnd_date().split("/");
+        int end_date=Integer.parseInt(splited[1]);
+        int total_date=end_date-start_date+1;
+        int total_time=group.getEnd_time()-group.getStart_time()+1;
+        int[] result={total_date,total_time};
+        return result;
+    }
 }

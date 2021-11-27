@@ -64,8 +64,10 @@ public class MeetPersonalService {
     }
 
     public int[][] findOnesAvailability(MeetPersonal personal, int total_time, int total_date){
-        ArrayList<ArrayList<Integer>> availability=personal.getAvailability();
         int[][] personal_array=new int[total_time][total_date];
+        if(personal==null)
+            return personal_array;
+        ArrayList<ArrayList<Integer>> availability=personal.getAvailability();
         if(!availability.isEmpty()) {
             for (int i = 0; i < total_time; i++) {
                 for (int j = 0; j < total_date; j++) {
