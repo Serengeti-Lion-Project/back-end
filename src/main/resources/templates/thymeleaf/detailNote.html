@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/paper.css" />
+</head>
+<body>
+    <div class="inner">
+        <div class="menuTitleBox">
+            <img src="/img/paperIcon.png" class="paperIcon">
+            <h2 class="menuTitle">회의록</h2>
+        </div>
+        <div>
+            <div class="writeTitleBox" >
+                <p class="writeTitleInput" style="margin-top:13px;" th:text="${meetNote.note_title}">제목이야 이거는 제목이다</p>
+            </div>
+            <div class="writeContentBox">
+                <div class="content">
+                    <p style="font-size: 15px;" th:text="${meetNote.note_content}">내용이다</p>
+                </div>
+            </div>
+            <p th:text="${meetNote.write_date}"></p>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

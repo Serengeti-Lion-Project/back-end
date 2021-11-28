@@ -8,6 +8,7 @@ public interface MeetNoteRepository {
     MeetNote save(MeetNote meetNote);
     MeetNote findByTeam_idAndNote_id(Long team_id,Long note_id);
     List<MeetNote> findAllByTeam_id(Long team_id);
+    MeetNote findByNoteId(Long note_id);
 
     //List<MeetNote> findAll(); 안쓸거 같아서 일단 주석 
 
