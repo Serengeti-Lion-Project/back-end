@@ -116,8 +116,15 @@
             <div class = "right" style = "width : 497px; margin-bottom: 30px;">
 
                 <h2 style="margin-bottom:30px;">세부 일정
+                    <a th:href="@{http://localhost:8080/fixed/{teamid}(teamid=${team._id})}">
+                        <button class = "addSchedule"
+                                style="margin-left:auto;
+                            font-size:20px; color:white;
+                            background-color: #A0CD63; border-radius: 20px;
+                            margin-top:20px; border:none; width:150px;
+                            height:40px; cursor:pointer;">일정 추가</button>
+                    </a>
 
-                    <button class = "addSchedule" style="margin-left:auto; font-size:20px; color:white; background-color: #A0CD63; border-radius: 20px; margin-top:20px; border:none; width:150px; height:40px; cursor:pointer;">일정 추가</button>
                 </h2>
                 <tbody>
                 <tr th:each="finalSchedule : ${finalSchedules}">
@@ -141,8 +148,8 @@
                     th:text="회의록추가"/>
                 <tbody>
                     <tr th:each="note : ${notes}">
-                        <td th:text="${note.note_title}"></td>
-                        <td th:text="${note.note_content}"></td>
+                        <a th:href="@{http://localhost:8080/teampage/notes/{noteid}(noteid=${note.note_id})}"
+                            th:text="${note.note_title}"/>
                         <td th:text="${note.write_date}"></td>
                         <br/>
                     </tr>

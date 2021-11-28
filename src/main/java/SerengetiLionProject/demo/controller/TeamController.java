@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 import java.util.List;
@@ -198,12 +199,19 @@ public class TeamController {
     @PostMapping("/teampage/new")
     public String createNewTeamNoteForm(MeetTeamNewNoteForm form){
         Long team_id = form.getTeam_id();
-        MeetNote meetNote=new MeetNote(form.getNote_title(),form.getNote_content(),form.getWrite_date().toString());
+        LocalDate now = LocalDate.now(); // 회의록 작성 시간 출력용
+        MeetNote meetNote=new MeetNote(form.getNote_title(),form.getNote_content(),now.toString());
         meetNote.setTeam_id(team_id);
         meetNoteService.SaveNote(meetNote); // 저장하면 note_id 리턴
         String teamid=team_id.toString();
-
         return "redirect:/teampage/"+teamid;
     }
 
+    @GetMapping("/teampage/notes/{noteid}")
+    public String detailNote(Model model, @PathVariable("noteid") String noteid){
+        Long note_id = Long.parseLong(noteid);
+        MeetNote meetNote = meetNoteService.findByNoteId(note_id); // 저장하면 note_id 리턴
+        model.addAttribute(meetNote);
+        return "thymeleaf/detailNote";
+    }
 }
