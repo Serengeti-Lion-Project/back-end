@@ -179,13 +179,13 @@ public class TeamController {
 
         // 팀 전체
         model.addAttribute("team", team);
+        System.out.println("team.get_id() = " + team.get_id());
         // 팀의 최종 스케줄        
         model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록
         model.addAttribute("notes",notes);
         return "thymeleaf/mainTeamPage";
     }
-
 
     //현재 팀 (team_id가 할당되어있다 가정
     @GetMapping(value="/teampage/new/{teamid}")
@@ -194,6 +194,7 @@ public class TeamController {
         model.addAttribute("team_id",team_id);
         return "thymeleaf/createNewTeamNote";
     }
+
     @PostMapping("/teampage/new")
     public String createNewTeamNoteForm(MeetTeamNewNoteForm form){
         Long team_id = form.getTeam_id();

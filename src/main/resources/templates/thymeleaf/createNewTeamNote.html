@@ -37,17 +37,16 @@
     </div>
     <form action="/teampage/new" method="post">
         <div class="writeTitleBox" >
-            <input id = "note_title" name ="note_title" type="text" class="writeTitleInput">
+            회의록 제목 : <input id = "note_title" name ="note_title" type="text" class="writeTitleInput">
         </div>
         <div class="writeContentBox">
-                <textarea>
+                회의록<textarea id = "note_content" name ="note_content">
 
                 </textarea>
-            <input id = "note_content" name ="note_content" type="text">
+<!--            <input id = "note_content" name ="note_content" type="text">-->
         </div>
         <input type="submit" value="Save" id="submitButton">
         <input type="hidden" id="team_id" name="team_id" th:value="${team_id}">
-
     </form>
 
 </div>

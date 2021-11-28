@@ -135,18 +135,18 @@
         </div>
     </div>
     <div class="bottomBox">
-
         <div class = "minutes" style="justify-content: center">
-
             <div class = "dummy" style="display :flex;flex-direction: row">
-            <tbody>
-                <tr th:each="note : ${notes}">
-                    <td th:text="${note.note_title}"></td>
-                    <td th:text="${note.note_content}"></td>
-                    <td th:text="${note.write_date}"></td>
-                    <br/>
-                </tr>
-            </tbody>
+                <a th:href="@{http://localhost:8080/teampage/new/{teamid}(teamid=${team._id})}"
+                    th:text="회의록추가"/>
+                <tbody>
+                    <tr th:each="note : ${notes}">
+                        <td th:text="${note.note_title}"></td>
+                        <td th:text="${note.note_content}"></td>
+                        <td th:text="${note.write_date}"></td>
+                        <br/>
+                    </tr>
+                </tbody>
             </div>
         </div>
     </div>
