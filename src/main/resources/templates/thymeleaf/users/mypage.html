@@ -34,12 +34,12 @@
         <div class="calendarBox" style="margin-left: 100px">
             <div class = "right" style = "width : 497px;">
 
-                <h2>팀 목록</h2>
+                <h2 style="margin-bottom:30px;">팀 목록</h2>
 
                 <table>
                     <tbody>
                     <tr th:each="team : ${teams}">
-                        <div class="test">
+                        <div class="team-names">
                             <div style="text-align:center;">
                             <a style="text-decoration:none; color:inherit;" th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
                                th:text="${team.value}"/>
