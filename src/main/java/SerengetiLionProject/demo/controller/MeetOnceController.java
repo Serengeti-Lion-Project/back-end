@@ -4,6 +4,7 @@ import SerengetiLionProject.demo.domain.*;
 import SerengetiLionProject.demo.dto.MeetOnceAvailableTimeForm;
 import SerengetiLionProject.demo.dto.MeetOnceNewGroupForm;
 import SerengetiLionProject.demo.dto.MeetOnceEntranceForm;
+import SerengetiLionProject.demo.dto.SessionUser;
 import SerengetiLionProject.demo.service.MeetGroupService;
 import SerengetiLionProject.demo.service.MeetPersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,14 @@ public class MeetOnceController {
     }
 
     @GetMapping("/") // 첫 페이지
-    public String firstPage() {
+    public String firstPage(HttpServletRequest request,Model model) {
+        HttpSession session=request.getSession();
+        SessionUser user=(SessionUser) session.getAttribute("user");
+        String uid="0";
+        if(user!=null){
+            uid=user.getUid().toString();
+        }
+        model.addAttribute("uid",uid);
         return "thymeleaf/firstPage";
     }
 

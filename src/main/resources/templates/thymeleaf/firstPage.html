@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +20,7 @@
         <p>로그인 없이 사용 가능해요</p>
     </div>
     <div class="menuBox">
-        <a href="http://localhost:8080/oauth2/authorization/google">
+        <a th:href="@{http://localhost:8080/mypage/{uid}(uid=${uid})}">
             <div class="buttonBox">
                 <img src="/img/twoTimeButton.png" class="twoTimeButton">
             </div>
