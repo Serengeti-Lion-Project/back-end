@@ -51,7 +51,7 @@ console.log(viewYear);
 
   // Dates 합치기
   var dates = prevDates.concat(thisDates, nextDates);
-
+  console.log(dates);
   // Dates 정리
   var firstDateIndex = dates.indexOf(1);
   var lastDateIndex = dates.lastIndexOf(TLDate);
@@ -60,7 +60,7 @@ console.log(viewYear);
                       ? 'this'
                       : 'other';
 
-                      let str = "<div class = \"date\"><span class = \"" + condition + "\">" + date + "</span></div>";
+                      let str = "<div class = \"date\" id = " + date + "><span class = \"" + condition + "\">" + date + "</span></div>";
                       dates[i] = str;
                     })
 
@@ -75,20 +75,17 @@ console.log(viewYear);
     var d = document.getElementById("dates");
     // var year_month = document.getElementById("year-month");
 
-    console.log(dates.join)
     window.addEventListener('load' ,function(){
 
-
-        if(d.innerText){
-            d.innerText = "new";
+      // window.onload = function(){
+        if(!d.innerText){
+            d.innerHTML = dates.join("");
         }else{
-            // dates.innerText = dates.prototype.join.call(arguments);
-            console.log(dates.join())
-
-            d.innerHTML = dates.join();
-
+          console.log("wait");
         }
+      // }
     });
+
 
 
   var today = new Date();
