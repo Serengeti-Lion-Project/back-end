@@ -16,7 +16,7 @@
 
 }
 
-.test{
+.team-schedule{
     background-image :url('/img/detailSchedule.png');
     background-size: 300px 50px;
     background-repeat: no-repeat;
@@ -27,4 +27,23 @@
     display: flex;
     align-items: center;
     justify-content:center;
+}
+
+
+.team-names{
+        border:3px solid #A0CD63;
+        opacity:0.7;
+        width:300px;
+        height:50px;
+        text-align:center;
+        display: flex;
+        align-items: center;
+        justify-content:center;
+}
+
+.team-names:nth-child(2n+1) {
+    background-color:#A0CD63;
+    opacity:0.7;
+    background-image:none;
+    background-color:#A0CD63;
 }
