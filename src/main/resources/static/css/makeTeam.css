@@ -46,6 +46,15 @@ input#nickname {
     text-align: center;
 }
 
+input#team_name, input#invited_members {
+    border:none;
+    width:300px;
+    height:40px;
+    margin-left:10px;
+    font-size:20px;
+    text-align: center;
+}
+
 input:focus {
     outline: none;
 }
