@@ -41,7 +41,7 @@
                     <tr th:each="team : ${teams}">
                         <div class="test">
                             <div style="text-align:center;">
-                            <a th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
+                            <a style="text-decoration:none; color:inherit;" th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
                                th:text="${team.value}"/>
                             </div>
                         </div>
