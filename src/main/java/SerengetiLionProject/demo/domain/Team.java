@@ -14,7 +14,7 @@ public class Team {
     public static final String SEQUENCE_NAME = "auto_sequence";
 
     @Id
-    private Long _id; // auto increment 적용
+    private Long _id; // auto increment 적용 (팀id)
     private String name;
     private Long leader_uid; // 팀장 id
 

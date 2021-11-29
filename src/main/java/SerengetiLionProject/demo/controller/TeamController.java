@@ -34,11 +34,9 @@ public class TeamController {
 
     @Autowired
     public TeamController(MeetGroupService meetGroupService, MeetPersonalService personalService, FinalScheduleService finalScheduleService, MeetNoteService meetNoteService, TeamService teamService, UserService userService) {
-
         this.meetGroupService = meetGroupService;
         this.personalService = personalService;
         this.finalScheduleService = finalScheduleService;
-        this.meetNoteService = meetNoteService;
         this.teamService = teamService;
         this.userService = userService;
         this.meetNoteService = meetNoteService;
@@ -49,7 +47,7 @@ public class TeamController {
         return "thymeleaf/makeTeam"; // makeTeam.html
     }
 
-    @PostMapping("/fixed/makeTeam")
+    @PostMapping("/fixed/makeTeam") // 팀 만들기 폼에서 받은 데이터로 팀 생성하기
     public String teamMake(TeamMakingForm teamMakingForm, HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
