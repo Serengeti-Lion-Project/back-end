@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,13 +84,13 @@ public class UserController {
 
     @GetMapping("/mypage/{uid}")
     public String myPage(@PathVariable("uid") String uid, Model model) {
-        System.out.println("uid = " + uid);
         Long id = Long.parseLong(uid);
         HashMap<Long, String> teams = new HashMap<>();
-        HashMap<String, String> schedules = new HashMap<>();
         User user = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(id)), User.class);
 
         String[] teamList = user.getTeam_id().split(",");
+        String[] schedules_array;
+        ArrayList<String> list=new ArrayList<>();
         for (int i = 0; i < teamList.length; i++) {
             Long tid = Long.parseLong(teamList[i]);
             Team team = teamService.findTeamById(tid);
@@ -98,11 +99,14 @@ public class UserController {
             if (scheduleList.isEmpty())
                 continue;
             for (int j = 0; j < scheduleList.size(); j++) {
-                schedules.put(scheduleList.get(j).getSchedule_title(), scheduleList.get(j).getFinal_date());
+                list.add(scheduleList.get(j).getFinal_date());
             }
+
         }
+
+        schedules_array=list.toArray(new String[0]);
         model.addAttribute("teams", teams);
-        model.addAttribute("schedules", schedules);
+        model.addAttribute("schedules", schedules_array);
 
         return "thymeleaf/users/mypage";
     }
