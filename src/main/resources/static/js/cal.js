@@ -1,81 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-
-    <style>
-        .inner {
-            display: flex;
-            flex-direction: column;
-            justify-content: baseline;
-            align-items: center;
-        }
-        .topBox {
-            display: flex;
-            flex-direction: row;
-            justify-content: baseline;
-            align-items: center;
-        }
-    </style>
-
-    <link rel='stylesheet' type='text/css' href='/css/teampage.css'>
-    <link rel='stylesheet' type='text/css' href='/css/calendar.css'>
-
-<!--    <script type = "text/javascript" src='/js/calendar.js'></script>-->
-
-</head>
-<body>
-<div class="inner">
-    <div class="topBox" style = "margin-bottom: 100px">
-        <div class="calendarBox" style="margin-left: 100px">
-            <div class = "right" style = "width : 497px;">
-
-                <h2 style="margin-bottom:30px;">팀 목록</h2>
-
-                <table>
-                    <tbody>
-                    <tr th:each="team : ${teams}">
-                        <div class="team-names">
-                            <div style="text-align:center;">
-                            <a style="text-decoration:none; color:inherit;" th:href="@{http://localhost:8080/teampage/{id}(id=${team.key})}"
-                               th:text="${team.value}"/>
-                            </div>
-                        </div>
-                    </tr>
-                    </tbody>
-                </table>
-                <a href="http://localhost:8080/fixed/makeTeam">
-                    <div class="buttonBox">
-                        팀추가
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <div class style="width: 150px;"></div>
-        <div class="detailSchedule">
-
-            <div class = "left" style = "width : 600px;">
-                <h2>내 일정</h2>
-<!--                <script type = "text/javascript" src='/js/calendar.js'></script>-->
-                <div id="setTable"></div>
-
-            </div>
-
-        </div>
-    </div>
-
-</div>
-<script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
+/*<![CDATA[*/
 var scheduleYes=/*[[${schedules}]]*/;
 //scheduleYes = /*[[${schedules}]]*/; ///여기다가 스케줄 밑에 형식으로 넣으면 됩니다
 //scheduleYes.push("12/13/2021");
-console.log(scheduleYes);
+
 var today = new Date();
 var dates = new Array(35);
 var months = new Array(35);
@@ -133,7 +60,7 @@ for (var i = 0; i < 6; i++) {
                 tableAddr[i][j].setAttribute("width", 40);
                 tableAddr[i][j].setAttribute("height", 50);
                 var divv = document.createElement("div");
-                divv.setAttribute("id", years[totalDateCount] + "-" + months[totalDateCount] + "-" + dates[totalDateCount]);
+                divv.setAttribute("id", months[totalDateCount] + "/" + dates[totalDateCount] + "/" + years[totalDateCount]);
                 totalDateCount++;
                 divv.style.borderRadius = "5px";
                 divv.style.backgroundColor = "#d5d5d5";
@@ -166,6 +93,3 @@ for (var i = 0; i < scheduleYes.length; i++) {
 }
 
 /*]]>*/
-</script>
-</body>
-</html>

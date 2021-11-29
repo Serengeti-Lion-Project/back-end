@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.List;
@@ -175,10 +176,14 @@ public class TeamController {
         Team team = teamService.findTeamById(team_id);
         List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
         List<MeetNote> notes = meetNoteService.findAllByTeam_id(team_id); // 팀 회의록
-
+        ArrayList<String> list=new ArrayList<>();
+        for(FinalSchedule f:finalSchedules){
+            list.add(f.getFinal_date());
+        }
+        String[] schedules=list.toArray(new String[0]);
+        model.addAttribute("schedules",schedules);
         // 팀 전체
         model.addAttribute("team", team);
-        System.out.println("team.get_id() = " + team.get_id());
         // 팀의 최종 스케줄        
         model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록
