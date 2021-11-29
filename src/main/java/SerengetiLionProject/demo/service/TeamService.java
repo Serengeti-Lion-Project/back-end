@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeamService {
     private final TeamRepository teamRepository;
 
-    //TestMeetPersonalService : SpringCOnfig에서 등록록
+    //TestMeetPersonalService : SpringCOnfig에서 등록
     public TeamService(TeamRepository teamRepository) {
         this.teamRepository=teamRepository;
     }

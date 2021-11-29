@@ -7,6 +7,7 @@ import SerengetiLionProject.demo.dto.SessionUser;
 import SerengetiLionProject.demo.dto.UserNickNameForm;
 import SerengetiLionProject.demo.service.FinalScheduleService;
 import SerengetiLionProject.demo.service.TeamService;
+import SerengetiLionProject.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -30,11 +31,13 @@ public class UserController {
 
     private FinalScheduleService finalScheduleService;
     private TeamService teamService;
+    private UserService userService;
 
     @Autowired
-    public UserController(FinalScheduleService finalScheduleService, TeamService teamService) {
+    public UserController(FinalScheduleService finalScheduleService, TeamService teamService, UserService userService) {
         this.finalScheduleService = finalScheduleService;
         this.teamService = teamService;
+        this.userService = userService;
     }
 
     @GetMapping("/checkNickname")
@@ -65,8 +68,17 @@ public class UserController {
                 Update.update("nickname", nickname),
                 User.class
         );
-        return "redirect:/";
 
+        // 자신의 일정만 관리하는 팀 하나를 자동 생성하고 내 id에 팀번호 넣어주기
+        Team team = new Team(nickname+"의 개인 일정",uid); // 팀 객체 생성 (팀장 id - 나자신)
+        Team ownTeam = teamService.saveTeam(team);
+
+        // 현재 팀을 만든 사람에도 team id를 추가해줘야함
+        User me=userService.findByEmail(sessionUser.getEmail());
+        System.out.println("me.getNickname() = " + me.getNickname());
+        User user1 = userService.saveTeamId(me.getTeam_id(),me.getEmail(),ownTeam.get_id());
+        System.out.println("user1.getTeam_id() = " + user1.getTeam_id());
+        return "redirect:/";
     }
 
     @GetMapping("/mypage/{uid}")
