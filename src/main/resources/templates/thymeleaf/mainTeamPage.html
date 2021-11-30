@@ -76,11 +76,11 @@
     <div class="bottomBox"  style="display:flex; flex-direction: column;justify-content: center; width:1000px;">
         <div class="bottomTopBox" style="display: flex; flex-direction: row; line-height: 40px;justify-content: space-between;">
             <h3 style="margin-left:15px;">회의록</h3>
-            <a style="margin-top:0px;text-decoration: none; background-color: #A0CD63; line-height:40px; width:40px; height:40px; border-radius:20px; color:white; font-size: 40px; text-align: center; align-items: center; display:flex; justify-content:center;"
+            <a style="margin-top:0px; text-decoration: none; background-color: #A0CD63; line-height:40px; width:40px; height:40px; border-radius:20px; color:white; font-size: 40px; text-align: center; align-items: center; display:flex; justify-content:center;"
                th:href="@{http://localhost:8080/teampage/new/{teamid}(teamid=${team._id})}">+</a>
         </div>
                     <tr th:each="note : ${notes}">
-                        <div class="paperItemBox" style="display: flex; flex-direction: row;">
+                        <div class="paperItemBox" style="display: flex; flex-direction: row;margin-top:8px;">
                         <div style="background-color:#CFE6B1; width:200px; height:40px; border-radius: 10px;  text-align: center; align-items: center; display:flex; justify-content:center;">
                             <td style="margin-top:0px; " th:text="${note.write_date}"></td>
                         </div>
