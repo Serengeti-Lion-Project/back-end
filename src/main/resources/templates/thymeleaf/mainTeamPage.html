@@ -73,20 +73,24 @@
 
         </div>
     </div>
-    <div class="bottomBox">
-        <div class = "minutes" style="justify-content: center">
-            <div class = "dummy" style="display :flex;flex-direction: row">
-                <a th:href="@{http://localhost:8080/teampage/new/{teamid}(teamid=${team._id})}"
-                    th:text="회의록추가"/>
-                <tbody>
+    <div class="bottomBox"  style="display:flex; flex-direction: column;justify-content: center; width:1000px;">
+        <div class="bottomTopBox" style="display: flex; flex-direction: row; line-height: 40px;justify-content: space-between;">
+            <h3 style="margin-left:15px;">회의록</h3>
+            <a style="margin-top:0px;text-decoration: none; background-color: #A0CD63; line-height:40px; width:40px; height:40px; border-radius:20px; color:white; font-size: 40px; text-align: center; align-items: center; display:flex; justify-content:center;"
+               th:href="@{http://localhost:8080/teampage/new/{teamid}(teamid=${team._id})}">+</a>
+        </div>
                     <tr th:each="note : ${notes}">
-                        <a th:href="@{http://localhost:8080/teampage/notes/{noteid}(noteid=${note.note_id})}"
+                        <div class="paperItemBox" style="display: flex; flex-direction: row;">
+                        <div style="background-color:#CFE6B1; width:200px; height:40px; border-radius: 10px;  text-align: center; align-items: center; display:flex; justify-content:center;">
+                            <td style="margin-top:0px; " th:text="${note.write_date}"></td>
+                        </div>
+
+                        <div style="border:solid 2px; border-radius: 10px; border-color: #A0CD63; width:800px;line-height: 40px;">
+                        <a style="margin-left: 10px; text-decoration: none; color:inherit" th:href="@{http://localhost:8080/teampage/notes/{noteid}(noteid=${note.note_id})}"
                             th:text="${note.note_title}"/>
-                        <td th:text="${note.write_date}"></td>
-                        <br/>
+                        </div>
+                        </div>
                     </tr>
-                </tbody>
-            </div>
         </div>
     </div>
 </div>
