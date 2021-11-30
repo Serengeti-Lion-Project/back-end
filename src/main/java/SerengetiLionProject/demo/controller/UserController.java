@@ -107,6 +107,7 @@ public class UserController {
         schedules_array=list.toArray(new String[0]);
         model.addAttribute("teams", teams);
         model.addAttribute("schedules", schedules_array);
+        model.addAttribute("uid",uid);
 
         return "thymeleaf/users/mypage";
     }

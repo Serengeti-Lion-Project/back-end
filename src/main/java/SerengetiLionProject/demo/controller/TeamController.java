@@ -53,6 +53,7 @@ public class TeamController {
         HttpSession session = request.getSession();
         SessionUser sessionUser = (SessionUser) session.getAttribute("user");
 
+        model.addAttribute("uid",sessionUser.getUid());
         String team_name = teamMakingForm.getTeam_name(); // 팀명
         String invited_members = teamMakingForm.getInvited_members(); // 초대한 팀원
         String[] emails = invited_members.split(",");
@@ -82,9 +83,11 @@ public class TeamController {
 
     //현재 팀 (team_id가 할당되어있다 가정 -> '새로운 meet 만들기' 누르면 여기로 넘어옴
     @GetMapping(value="/fixed/{teamid}")
-    public String createNewTeamMeet(Model model, @PathVariable("teamid") String teamid){
+    public String createNewTeamMeet(Model model, @PathVariable("teamid") String teamid, HttpServletRequest request){
         Long team_id=Long.parseLong(teamid);
         model.addAttribute("team_id",team_id);
+        SessionUser user=(SessionUser) request.getSession().getAttribute("user");
+        model.addAttribute("uid",user.getUid());
         return "thymeleaf/fixedGroup";
     }
 
@@ -119,6 +122,7 @@ public class TeamController {
         if(sessionUser.getUid()==leader_uid)//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
             isLeader=1;
 
+        model.addAttribute("uid",sessionUser.getUid());
         System.out.println("team leader id: "+leader_uid);
         System.out.println("is leader: "+isLeader);
         //아래의 시간, 날짜 값들은 프론트에서 화면에 날짜 및 시간 표시해주기 위해 저장해주는 값
@@ -171,7 +175,7 @@ public class TeamController {
 
 
     @GetMapping ("/teampage/{teamid}")
-    public String mainTeamPage(Model model, @PathVariable("teamid") String teamid){
+    public String mainTeamPage(Model model, @PathVariable("teamid") String teamid, HttpServletRequest request){
         Long team_id = Long.parseLong(teamid);
         Team team = teamService.findTeamById(team_id);
         List<FinalSchedule> finalSchedules = finalScheduleService.findAllbyTeamId(team_id);
@@ -188,14 +192,19 @@ public class TeamController {
         model.addAttribute("finalSchedules",finalSchedules);
         // 팀의 회의록
         model.addAttribute("notes",notes);
+
+        SessionUser user=(SessionUser) request.getSession().getAttribute("user");
+        model.addAttribute("uid",user.getUid());
         return "thymeleaf/mainTeamPage";
     }
 
     //현재 팀 (team_id가 할당되어있다 가정
     @GetMapping(value="/teampage/new/{teamid}")
-    public String createNewTeamNote(Model model, @PathVariable("teamid") String teamid){
+    public String createNewTeamNote(Model model, @PathVariable("teamid") String teamid, HttpServletRequest request){
         Long team_id=Long.parseLong(teamid);
         model.addAttribute("team_id",team_id);
+        SessionUser user=(SessionUser) request.getSession().getAttribute("user");
+        model.addAttribute("uid",user.getUid());
         return "thymeleaf/createNewTeamNote";
     }
 
@@ -211,10 +220,12 @@ public class TeamController {
     }
 
     @GetMapping("/teampage/notes/{noteid}")
-    public String detailNote(Model model, @PathVariable("noteid") String noteid){
+    public String detailNote(Model model, @PathVariable("noteid") String noteid, HttpServletRequest request){
         Long note_id = Long.parseLong(noteid);
         MeetNote meetNote = meetNoteService.findByNoteId(note_id); // 저장하면 note_id 리턴
         model.addAttribute(meetNote);
+        SessionUser user=(SessionUser) request.getSession().getAttribute("user");
+        model.addAttribute("uid",user.getUid());
         return "thymeleaf/detailNote";
     }
 }
