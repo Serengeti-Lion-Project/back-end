@@ -119,9 +119,10 @@ public class TeamController {
         String name=sessionUser.getName(); //현재 사용자 이름 받아서 자동으로 이름 넣어줄거임
 
         int isLeader=0;
-        if(sessionUser.getUid()==leader_uid)//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
+        if(sessionUser.getUid().equals(leader_uid))//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
             isLeader=1;
 
+        System.out.println("uid: "+sessionUser.getUid());
         model.addAttribute("uid",sessionUser.getUid());
         System.out.println("team leader id: "+leader_uid);
         System.out.println("is leader: "+isLeader);
@@ -184,6 +185,9 @@ public class TeamController {
         for(FinalSchedule f:finalSchedules){
             list.add(f.getFinal_date());
         }
+
+        List<MeetGroup> allMeet=meetGroupService.findAllbyTeamId(team_id);
+        model.addAttribute("meets",allMeet);
         String[] schedules=list.toArray(new String[0]);
         model.addAttribute("schedules",schedules);
         // 팀 전체
