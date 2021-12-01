@@ -63,6 +63,16 @@
 
                 </h2>
                 <tbody>
+                <tr th:each="meet : ${meets}">
+                    <div class="team-schedule" style="width:400px; background-size: 400px 50px;">
+                        <a style="text-decoration:none; color:inherit;" th:href="@{http://localhost:8080/fixed/{title}/{urlid}(title=${meet.title},urlid=${meet.url_id})}"
+                           th:text="${meet.title}"/>
+                    </div>
+                </tr>
+                </tbody>
+
+                <h3 style="margin-top:15px; color:#A0CD63;">----------------------------------------------------</h3>
+                <tbody>
 
                 <tr th:each="finalSchedule : ${finalSchedules}">
                     <div class="team-schedule" style="width:400px; background-size: 400px 50px;">
