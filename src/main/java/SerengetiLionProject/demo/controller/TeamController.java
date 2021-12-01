@@ -122,6 +122,7 @@ public class TeamController {
         if(sessionUser.getUid().equals(leader_uid))//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
             isLeader=1;
 
+        System.out.println("uid: "+sessionUser.getUid());
         model.addAttribute("uid",sessionUser.getUid());
         System.out.println("user id: "+sessionUser.getUid());
         System.out.println("team leader id: "+leader_uid);
@@ -185,6 +186,9 @@ public class TeamController {
         for(FinalSchedule f:finalSchedules){
             list.add(f.getFinal_date());
         }
+
+        List<MeetGroup> allMeet=meetGroupService.findAllbyTeamId(team_id);
+        model.addAttribute("meets",allMeet);
         String[] schedules=list.toArray(new String[0]);
         model.addAttribute("schedules",schedules);
         // 팀 전체

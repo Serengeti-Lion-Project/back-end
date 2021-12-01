@@ -37,8 +37,10 @@ public class TestMeetGroupRepository implements MeetGroupRepository{
     }
 
     @Override
-    public MeetGroup findByTeam(Long team_id) {
-        return null;
+    public List<MeetGroup> findByTeam(Long team_id) {
+        Query query=new Query();
+        query.addCriteria(Criteria.where("team_id").is(team_id));
+        return mongoTemplate.find(query,MeetGroup.class);
     }
 
     @Override

@@ -64,4 +64,8 @@ public class MeetGroupService {
         int[] result={total_date,total_time};
         return result;
     }
+
+    public List<MeetGroup> findAllbyTeamId(Long teamid){
+        return groupRepository.findByTeam(teamid);
+    }
 }
