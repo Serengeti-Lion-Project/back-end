@@ -119,10 +119,11 @@ public class TeamController {
         String name=sessionUser.getName(); //현재 사용자 이름 받아서 자동으로 이름 넣어줄거임
 
         int isLeader=0;
-        if(sessionUser.getUid()==leader_uid)//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
+        if(sessionUser.getUid().equals(leader_uid))//현재 세션의 사용자 uid == 팀 리더의 uid이면? 팀장이므로 isLeader=1
             isLeader=1;
 
         model.addAttribute("uid",sessionUser.getUid());
+        System.out.println("user id: "+sessionUser.getUid());
         System.out.println("team leader id: "+leader_uid);
         System.out.println("is leader: "+isLeader);
         //아래의 시간, 날짜 값들은 프론트에서 화면에 날짜 및 시간 표시해주기 위해 저장해주는 값
