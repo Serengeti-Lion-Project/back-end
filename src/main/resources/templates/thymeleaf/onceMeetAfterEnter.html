@@ -9,15 +9,6 @@
 <h3>This is a Meet Once Page  -> 배열 어떻게 만드는지 몰라서 일단 그냥 컨트롤러에서 랜덤하게 배열 생성해서 저장하게 해볼게요 (테스트용)</h3>
 <h3>배열에 저장된 값은 콘솔에서 확인할 수 있음! </h3>
 <form action="/once/createPersonal" method="post">
-<!--    <th:block th:each="i: ${#numbers.sequence(0, end_date-start_date)}">-->
-<!--        <th:block th:each="n: ${#numbers.sequence(0, end_time-start_time)}">-->
-
-<!--            <input type="text" id="available" name="available" placeholder="0or1">-->
-
-<!--        </th:block>-->
-<!--        <br>-->
-
-<!--    </th:block>-->
 
     <input type="hidden" name="start_date" th:value="${start_date}">
     <input type="hidden" name="end_date" th:value="${end_date}">
